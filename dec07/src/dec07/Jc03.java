@@ -2,9 +2,8 @@ package dec07;
 
 import java.util.Arrays;
 
-public class Sort01 {
+public class Jc03 {
 	public static void main(String[] args) {
-		int i, j;
 		int temp;
 		int a[] = { 75, 95, 85, 100, 50 };
 
