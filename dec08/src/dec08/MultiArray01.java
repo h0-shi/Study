@@ -69,6 +69,16 @@ public class MultiArray01 {
 			System.out.println(Arrays.toString(a));
 		}
 		System.out.println(Arrays.deepToString(score));
+		
+		int arr01[] = {10,20,30,40,50,60,70,80,90,100};
+		int arr02[][]	= {{10,20,30}, {40,50,60}};
+		
+		for (int i = 0; i < arr02.length; i++) {
+			for (int j = 0; j < arr02[i].length; j++) {
+				System.out.print(arr02[i][j]+",");
+			}
+			System.out.println("");
+		}
 	}
 
 }
