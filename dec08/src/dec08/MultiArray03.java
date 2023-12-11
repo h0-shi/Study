@@ -23,6 +23,7 @@ public class MultiArray03 {
 		System.out.println(list);
 
 		list.add(0, 1);
+		list.remove(0);
 		System.out.println(list);
 
 		System.out.println(list.get(0));
