@@ -79,6 +79,7 @@ class MyFrame extends JFrame {
 				}
 			}
 		});//리스너 끝
+		
 		deleteBtn.addActionListener(new ActionListener() {
 			
 			@Override
