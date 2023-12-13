@@ -41,6 +41,9 @@ public class String03 {
 		sb.append("가각가가니나다ㅏㅁ나바사차");
 //		capacity
 		System.out.println(sb.capacity());
+		
+		System.out.println("왜이리 느려졌어");
+		
 	}
 
 }
