@@ -35,8 +35,14 @@ class Cat {
 		}
 	}
 
-	public void sleep() {
+	public int sleep() {
 		System.out.println(name + "이(가) 잠을 잡니다.");
+		return this.name.length();
+	}
+	
+	public int add(int num1, int num2) {
+		int num3 = num1+num2;
+		return num3;
 	}
 
 }
@@ -68,19 +74,26 @@ public class CM01 {
 		System.out.println("==");
 
 		System.out.println("어떤 고양이를 괴롭히겠습니까? 1~4");
-		int num = sc.nextInt();
+		int num =  1;//sc.nextInt();
 		System.out.println("고양이를 몇번 괴롭히시겠습니까?");
-		int count = sc.nextInt();
+		int count = 5;//sc.nextInt();
 		for (int i = 0; i < count; i++) {
 			cats[num - 1].attack(count);
 		}
 		System.out.println("==");
 		System.out.println("고양이를 몇번 쓰다듬으시겠어요?");
-		num = sc.nextInt();
+		num = 5; //sc.nextInt();
 		for (int i = 0; i < num; i++) {
 			cat1.stroke();
 		}
+		
+		int length = cat1.sleep();
+		System.out.println(length);
 
+		int result = cat4.add(10,20);//호출 할 때에는 파라미터 수, 순서, 타입에 맞게
+		
+		System.out.println(result);
+		
 	}
 
 }
