@@ -1,4 +1,4 @@
-package oop;
+package test;
 
 class Conv {
 	public Conv(int a) {
@@ -20,7 +20,7 @@ public class Test01 {
 	public static void main(String[] args) {
 		Conv obj = new Conv(3);
 		obj.a = 5;	
-		int b = obj.func();	//8
+		int b = obj.func();	
 		System.out.println(obj.a+b);	//56+5 = 61
 	}
 
