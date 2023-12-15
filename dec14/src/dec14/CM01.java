@@ -60,7 +60,8 @@ public class CM01 {
 		cat2.sleep();
 		cat3.sleep();
 		cat4.sleep();
-
+		
+		
 		System.out.println("==");
 		Cat cats[] = new Cat[4];
 		cats[0] = cat1;

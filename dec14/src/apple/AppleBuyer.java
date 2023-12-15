@@ -18,7 +18,7 @@ public class AppleBuyer {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("몇개의 사과를 구매할까?");
 		int count = sc.nextInt();
-		while (count * appleSeller.APPLE_PRICE > buyerMoney) {
+		while (count > buyerMoney / appleSeller.APPLE_PRICE) {
 			System.out.println("가진 돈이 부족합니다.");
 			System.out.println("사과는 " + buyerMoney / appleSeller.APPLE_PRICE + "개 구매 가능합니다.");
 			System.out.println("몇개의 사과를 구매할까?");
