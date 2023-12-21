@@ -15,5 +15,7 @@ public class List03 {
 //		List number = (object) list.get(1);
 		
 		
+		
+		
 	}
 }
