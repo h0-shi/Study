@@ -23,26 +23,44 @@ public class Set02 {
 		
 		Set<Human> humans = new HashSet<>();
 		Human n = new Human();
+		Human n2 = new Human();
 		humans.add(n);
 		n.ssn = 1;
 		humans.add(n);
 		n.ssn = 2;
 		humans.add(n);
-		n.ssn = 3;
-		humans.add(n);
 		n.ssn = 4;
 		humans.add(n);
+		n.ssn = 3;
+		n2.ssn = 3;
+		humans.add(n);
+		humans.add(n2);
 		
 		System.out.println("ssn");
-		System.out.println(n.ssn);
+//		System.out.println(n.ssn);
 		//---------
+		System.out.println("두두둥");
 		System.out.println(humans.size());
 		System.out.println(humans);
 
+//		지금 Set에 들어간게  n / n2인데 둘 다 ssn=3을 갖음
+//		어떻게 Set에 같은 값이 들어갈 수 있지? 하고 잠시 생각을 해봤는데
+//		Set에 들어간건 3이 아니라 n과 n2라는 객체임
+//		3은 각 객체가 갖고있는 속성? 필드?임.
+//		따라서 Set에는 서로 다른 두개의 객체가 들어간 상태임
 		System.out.println("set ssn?");
 		List<Human> human = new ArrayList<>(humans);
 		System.out.println(human.get(0).ssn);	//4
-		//set은 기본 값을 지우고 새로운 값을 넣는구나..
+		System.out.println(human.get(1).ssn);	//4
+		
+		
+//		humans.add(new Human());
+//		humans.add(new Human());
+//		humans.add(new Human());
+//		humans.add(new Human());
+//		System.out.println("humans 크기");
+//		System.out.println(humans.size());
+		
 		
 	}
 }
