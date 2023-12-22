@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class Test02 {
+public class List02 {
 	public static void main(String[] args) {
 
 //		게시판 만들 때 이런식의 코드가 사용된다!
