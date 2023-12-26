@@ -57,6 +57,6 @@ public class List01 {
 		System.out.println(Arrays.toString(listToArr));
 		
 		List<String> subList = list.subList(3, 5);
-		System.out.println(subList);
+		System.out.println(subList); 
 	}
 }

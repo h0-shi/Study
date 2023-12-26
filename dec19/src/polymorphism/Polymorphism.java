@@ -42,9 +42,9 @@ class Xman extends Hero {
 
 public class Polymorphism {
 	public static void main(String[] args) {
-		Ironman ironman = new Ironman();
 		Hero h = new Ironman();
 
+		Ironman ironman = new Ironman();
 		ironman.makeSuit();
 		h.attack();
 		System.out.println("여기 주목");

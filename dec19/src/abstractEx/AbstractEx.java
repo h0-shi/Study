@@ -1,11 +1,11 @@
 package abstractEx;
 
-abstract class Hero {		// 추상메서드
+abstract class Hero {		// 추상클래스
 	String name;
 	int age;
 
-	public abstract void attack(); 	// 추상클래스
-	public abstract void sleep(); 	// 추상클래스
+	public abstract void attack(); 	// 추상 메서드
+	public abstract void sleep(); 	// 추상 메서드
 }
 
 class Ironman extends Hero {

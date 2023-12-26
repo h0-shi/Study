@@ -30,7 +30,7 @@ public class Set01 {
 			System.out.println(list.get(i));
 		}
 		
-//		Iterator
+//		Iterator_p.566
 		Iterator<String> it = set.iterator();
 		while(it.hasNext()){
 			System.out.println(it.next());
