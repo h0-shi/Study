@@ -2,21 +2,22 @@ package com.poseidon.db;
 // 데이터 전송 객체
 public class EmployeesDTO { // data transfer object
 //	 데이터 전송 객체 (DTO)_ dto는 private으로 설정해야 함
-	private String dept_no, dept_name;
+	private String Dept_no, Dept_name;
 	private int EMP_no;
-	private String Birth_date, First_name, Last_name, Hire_date;
-	private char Gender;
+	private String Birth_date, First_name, Last_name, Hire_date, Gender;
+	
+	
 	public String getDept_no() {
-		return dept_no;
+		return Dept_no;
 	}
 	public void setDept_no(String dept_no) {
-		this.dept_no = dept_no;
+		Dept_no = dept_no;
 	}
 	public String getDept_name() {
-		return dept_name;
+		return Dept_name;
 	}
 	public void setDept_name(String dept_name) {
-		this.dept_name = dept_name;
+		Dept_name = dept_name;
 	}
 	public int getEMP_no() {
 		return EMP_no;
@@ -48,15 +49,14 @@ public class EmployeesDTO { // data transfer object
 	public void setHire_date(String hire_date) {
 		Hire_date = hire_date;
 	}
-	public char getGender() {
+	public String getGender() {
 		return Gender;
 	}
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		Gender = gender;
 	}
-
 	
-
+	
 //	getter / setter method	
 	
 }

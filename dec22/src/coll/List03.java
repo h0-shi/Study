@@ -49,7 +49,7 @@ class Board{
 //번호 | 제목 | 글쓴이 | 날짜 | 좋아요 순서로 출력하도록 해봐
 public class List03 {
 	public static void main(String[] args) {
-		List<Board> list = new ArrayList<Board>();
+		List<Board> list = new ArrayList<>();
 		Board board = new Board(1,"첫번째 글","박시호","12.22",1);
 		list.add(board);
 

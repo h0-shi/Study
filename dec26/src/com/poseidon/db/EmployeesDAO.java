@@ -16,12 +16,13 @@ public class EmployeesDAO {
 //		각종 객체
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT * FROM departments LIMIT 0,10";
+		String sql = "SELECT * FROM employees LIMIT 0,10";
 //		로직
 		
 		try {
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
+			
 			result = new ArrayList<EmployeesDTO>();
 			while(rs.next()) {
 				EmployeesDTO dto = new EmployeesDTO	();
@@ -29,7 +30,7 @@ public class EmployeesDAO {
 				dto.setBirth_date(rs.getString(2));
 				dto.setFirst_name(rs.getString(3));
 				dto.setLast_name(rs.getString(4));
-				dto.setGender((char)rs.getInt(5));
+				dto.setGender(rs.getString(5));
 				dto.setHire_date(rs.getString(6));
 				
 				result.add(dto);
