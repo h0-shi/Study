@@ -38,6 +38,7 @@ package com.hoshi.inner;
  * 익명 클래스
  * :클래스 선언과 객체 생성을 동시에 하는 이름없는 일회용 클래스
  */
+
 //class A{
 //	int num;
 //	class B{ // 멤버클래스 = 정적 멤버 클래스
@@ -56,34 +57,76 @@ package com.hoshi.inner;
 //	}
 //}
 
-class A{
+class A {
 	public A() {
 		System.out.println("A클래스가 생성됨");
 	}
-	class B{ // 인스턴스 멤버 클래스
-		int field;
+
+	class B { // 인스턴스 멤버 클래스
+		int field1;
+
 //		static int field2;
 		public B() {
 			System.out.println("B 객체가 생성됨");
 		}
+
 		public void methodB() {
-			
+
 		}
-		
+
 //		public static void methodB2() {	} // 중첩클래스에서는 static을 못쓰는구나
 	}
-	
-	static class C{
+
+	static class C {
 		int field1;
 		static int field2;
+
 		public C() {
 			System.out.println("C객체 생성");
 		}
-		public void methodC() {}
-		public static void methodC2() {}
+
+		public void methodC() {
+		}
+
+		public static void methodC2() {
+		}
+	} // class C
+
+	public void method() { // A의 메서드
+//		로컬 영역
+		int num = 10;
+		class D {
+			int field1;
+//			static int field2;  이건 안되네요
+			public D() {
+				System.out.println("D객체 생성");
+			}
+			public void methodD() {	}
+//			public static void methodD2() {} static 안되는구마이
+		} //여기까지 Class D
+//		Class A에서 D 생성할 수 있음
+		D d = new D();
+		d.field1 = 3;
 	}
 }
 
 public class Inner01 {
+	public static void main(String[] args) {
+		
+		A a = new A();
+//		A객체가 생성되어야 B 객체 생성이 가능함
+		A.B b = a.new B();
+		b.field1 = 1;
+		b.methodB();
+		
+//		C는 Static이기 때문에 A를 생성하지 않아도 됨
+		A.C c = new A.C();
+		c.field1 = 1;
+		c.methodC();
+		A.C.methodC2(); // static method
+		
+		a.method();
+		
+	}
 
 }
