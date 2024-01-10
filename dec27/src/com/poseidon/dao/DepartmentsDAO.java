@@ -38,8 +38,8 @@ public class DepartmentsDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		 
 		 return list;
 	 }
+	 
 	
 }
