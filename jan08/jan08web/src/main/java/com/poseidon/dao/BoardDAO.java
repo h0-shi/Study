@@ -49,6 +49,26 @@ public class BoardDAO {
 		return list;
 	}
 
+	public int delete(int no) {
+		int result = 0;
+		List<BoardDTO> dto = new ArrayList<BoardDTO>();
+		Connection conn = DBConnection.getInstance().getConnection();
+		PreparedStatement pstmt = null;
+		String sql = "DELETE FROM board WHERE board_no=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(null, pstmt, conn);
+		}
+		
+		
+		return result;
+	}
+	
 	private void close(ResultSet rs, PreparedStatement pstmt, Connection con) {
 		if(rs != null) {
 			try {
@@ -125,5 +145,28 @@ public class BoardDAO {
 		}
 		
 		return result;
+	}
+	
+	public void update(BoardDTO dto) {
+		
+		Connection conn = DBConnection.getInstance().getConnection();
+		PreparedStatement pstmt = null;
+		
+		String sql = "UPDATE board SET board_title=?, board_content=? WHERE board_no=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getTitle());
+			pstmt.setString(2, dto.getContent());
+			pstmt.setInt(3, dto.getNo());
+			
+			pstmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(null, pstmt, conn);
+		}
+		
+		
 	}
 }
