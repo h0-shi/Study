@@ -65,7 +65,7 @@
 						</div>
 						<div class="detailWRITECOUNT">
 							<div class="detailWRITE">${detail.write }
-							<img alt = "수정" src = "./img/edit.png" >
+							<img alt = "수정" src = "./img/edit.png" onclick="update()">
 							<img alt = "삭제" src = "./img/delete.png" onclick="del()">
 							</div>
 							<div class="detailCOUNT">${detail.count }</div>
@@ -85,6 +85,12 @@
 				var ch = confirm("삭제하시겠습니까?")
 				if(ch){
 				location.href="./delete?no=${detail.no }";
+				}
+			}
+			function update(){
+				var ch = confirm("글을 수정하시겠습니까?");
+				if(ch){
+					location.href="./update?no=${detail.no}";
 				}
 			}
 		</script>
