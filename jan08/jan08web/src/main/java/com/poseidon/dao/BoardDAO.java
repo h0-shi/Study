@@ -10,9 +10,7 @@ import java.util.List;
 import com.poseidon.db.DBConnection;
 import com.poseidon.dto.BoardDTO;
 
-public class BoardDAO {
-
-	
+public class BoardDAO extends AbstractDAO {
 	
 	public List<BoardDTO> boardList() {
 		List<BoardDTO> list = new ArrayList<BoardDTO>();
@@ -69,29 +67,6 @@ public class BoardDAO {
 		return result;
 	}
 	
-	private void close(ResultSet rs, PreparedStatement pstmt, Connection con) {
-		if(rs != null) {
-			try {
-				rs.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		if(pstmt != null) {
-			try {
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		if(con != null) {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
 
 	public BoardDTO detail(int no) {
 		BoardDTO dto = new BoardDTO();

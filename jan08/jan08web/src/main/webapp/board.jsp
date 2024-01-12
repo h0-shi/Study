@@ -108,7 +108,6 @@ footer {
 							<tr>
 								<td class="w1">${row.no }</td>
 								<td class="title"><a href="detail?no=${row.no }">${row.title }</td>
-								</a>
 								<td class="w2">${row.write }</td>
 								<td class="w1">${row.date }</td>
 								<td class="w1">${row.count }</td>
@@ -116,10 +115,9 @@ footer {
 						</c:forEach>
 					</table>
 					<button onclick="url('./write')">글쓰기</button>
-					<button onclick="url('./info')">INFO</button>
-					
+					${sessionScope.mname }님 반갑습니다.
 				</article>
-				<article>
+				
 					<%--  <fmt:requestEncoding value="UTF-8"/>
 					<fmt:setLocale value="ko_kr"/>
 					<fmt:formatNumber value="3.14" type="currency"/><br>
@@ -135,7 +133,6 @@ footer {
 					<fmt:formatDate type="both" dateStyle="long" timeStyle="long" value="${nowDate }"/><br>
 					<fmt:formatDate pattern="yyyy-mm-dd" value="${nowDate }"/>
 					--%>
-				</article>
 				<%-- <article>
 					fn 이용해서 자료형 데이터 길이 뽑아내기
 					${fn:length(list) }<br>
