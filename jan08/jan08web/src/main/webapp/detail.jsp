@@ -54,7 +54,8 @@
 <body>
 	<div class="container">
 		<header>
-			<jsp:include page="menu.jsp"></jsp:include>
+			<%-- <jsp:include page="menu.jsp"></jsp:include> --%>
+			<%@ include file="menu.jsp"%>
 		</header>
 		<div class="main">
 			<div class="mainStyle">
@@ -64,9 +65,11 @@
 							${detail.title }
 						</div>
 						<div class="detailWRITECOUNT">
-							<div class="detailWRITE">${detail.write }
+							<div class="detailWRITE">${detail.write } / ${detail.mid } / ${sessionScope.mid }
+							<c:if test="${detail.mid eq sessionScope.mid }">
 							<img alt = "수정" src = "./img/edit.png" onclick="update()">
 							<img alt = "삭제" src = "./img/delete.png" onclick="del()">
+							</c:if>
 							</div>
 							<div class="detailCOUNT">${detail.count }</div>
 						</div>
@@ -94,7 +97,7 @@
 				}
 			}
 		</script>
-		<footer> </footer>
+		<footer><%@include file = 'footer.jsp' %> </footer>
 	</div>
 </body>
 </html>

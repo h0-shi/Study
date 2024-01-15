@@ -22,9 +22,17 @@ public class Login extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+		HttpSession session = request.getSession();
+		String url = "";
+		if(session.getAttribute("mname")!=null) {
+			url="index.jsp";
+		} else {
+			url="login.jsp";
+		}
+		RequestDispatcher rd = request.getRequestDispatcher(url);
 		rd.forward(request, response);
-	}
+		
+	} 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -37,22 +45,23 @@ public class Login extends HttpServlet {
 			dto = dao.login(dto);
 			if(dto.getCount()==1) {
 				System.out.println("정상 로그인");
-//				세션 만들기
+				
+//				세션 만들기-세션 스코프(외우기)
 				HttpSession session = request.getSession();
 				session.setAttribute("mname", dto.getMname()); // mname이라는 이름으로 세션 만듬
 				session.setAttribute("mid", dto.getMid());	// mid라는 이름으로 세션 만듬
+
+				
 //				페이지 이동 to board
 				response.sendRedirect("./board");
 			} else {
 //				System.out.println("헬로우 사만다");
 //				페이지 이동 = login?error=4567
 				response.sendRedirect("./login?error=?");
-				
 			}
-			
 		} else {
 			
-		}
+		}	
 			
 	}
 

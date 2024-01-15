@@ -16,8 +16,7 @@
 <body>
 	<div class="container">
 		<header>
-			<%-- <%@ include file="menu.jsp" %> --%>
-			<jsp:include page="menu.jsp"></jsp:include>
+			<%@ include file="menu.jsp"%>
 			<!-- jsp:는 출력 결과만 화면에 나옵니다. -->
 		</header>
 		<div class="main">
