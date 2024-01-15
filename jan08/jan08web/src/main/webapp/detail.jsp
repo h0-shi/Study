@@ -66,7 +66,7 @@
 						</div>
 						<div class="detailWRITECOUNT">
 							<div class="detailWRITE">${detail.write } / ${detail.mid } / ${sessionScope.mid }
-							<c:if test="${detail.mid eq sessionScope.mid }">
+							<c:if test="${sessionScope.mname != null && detail.mid eq sessionScope.mid }">
 							<img alt = "수정" src = "./img/edit.png" onclick="update()">
 							<img alt = "삭제" src = "./img/delete.png" onclick="del()">
 							</c:if>
@@ -78,6 +78,7 @@
 						</div>
 					</div>
 					<button onclick="url('./board')">게시판으로</button>
+					<input type="hidden" name="mid" value="${detail.mid }">
 				</article>
 			</div>
 		</div>

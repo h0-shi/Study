@@ -109,13 +109,14 @@ public class BoardDAO extends AbstractDAO {
 		Connection conn = DBConnection.getInstance().getConnection();
 		PreparedStatement pstmt = null;
 		
-		String sql = "INSERT INTO board (board_title, board_content, board_write) VALUES (?,?,?)";
+		String sql = "INSERT INTO board (board_title, board_content, mno) "
+				+ "VALUES (?,?,(SELECT mno FROM member WHERE mid=?))";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getTitle());
 			pstmt.setString(2, dto.getContent());
-			pstmt.setString(3, "박시호");
+			pstmt.setString(3, dto.getMid());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
