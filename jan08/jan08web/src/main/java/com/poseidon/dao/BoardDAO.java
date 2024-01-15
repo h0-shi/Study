@@ -75,7 +75,10 @@ public class BoardDAO extends AbstractDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT * FROM board WHERE board_no=?";
+		String sql = "SELECT b.board_no, b.board_title, b.board_content, m.mname as board_write, m.mid, "
+					+ "b.board_date, b.board_count "
+			        + "FROM board b JOIN member m ON b.mno=m.mno "
+			        + "WHERE b.board_no=?";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -89,6 +92,7 @@ public class BoardDAO extends AbstractDAO {
 				dto.setWrite(rs.getString("board_write"));
 				dto.setDate(rs.getString("board_date"));
 				dto.setCount(rs.getInt("board_count"));
+				dto.setMid(rs.getString("mid"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

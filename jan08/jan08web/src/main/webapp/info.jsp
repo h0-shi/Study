@@ -12,7 +12,7 @@
 <body>
 	<div class="container">
 		<header>
-			<jsp:include page="menu.jsp"></jsp:include>
+			<%@ include file="menu.jsp"%>
 		</header>
 		<div class="main">
 			<div>

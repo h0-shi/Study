@@ -12,7 +12,7 @@
 <link href="./css/index.css" rel="stylesheet" />
 <link href="./css/menu.css" rel="stylesheet" />
 <script type="text/javascript" src="./js/menu.js"></script>
-<style text="text/css">
+<style type="text/css">
 table {
 	width: 900px;
 	height: 400px;
@@ -80,7 +80,7 @@ footer {
 			<%@ include file="menu.jsp"%>
 		</header>
 		<div class="main">
-			<div style="width: 900; margin: 0 auto; padding-top: 10px">
+			<div class="mainStyle">
 				<article>
 					<!-- for문 연습 <br> -->
 					<c:forEach items="${list}" var="e" varStatus="s">
@@ -89,22 +89,15 @@ footer {
 					</c:forEach>
 				</article>
 				<article>
-					<table>
-						<c:choose>
-							<c:when test="${fn:length(list) gt 0 }">
+				<table><c:choose><c:when test="${fn:length(list) gt 0 }">
 								<tr>
 									<th>번호</th>
 									<th>제목</th>
 									<th>글쓴이</th>
 									<th>날짜</th>
 									<th>읽음</th>
-								</tr>
-							</c:when>
-							<c:otherwise>
-								<h1>출력할 값이 없습니다.</h1>
-							</c:otherwise>
-						</c:choose>
-						<c:forEach items="${list }" var="row">
+								</tr></c:when><c:otherwise>
+								<h1>출력할 값이 없습니다.</h1></c:otherwise></c:choose><c:forEach items="${list }" var="row">
 							<tr>
 								<td class="w1">${row.no }</td>
 								<td class="title"><a href="detail?no=${row.no }">${row.title }</td>
@@ -114,8 +107,10 @@ footer {
 							</tr>
 						</c:forEach>
 					</table>
-					<button onclick="url('./write')">글쓰기</button>
+					<c:if test="${sessionScope.mname ne null}">
 					${sessionScope.mname }님 반갑습니다.
+					<button onclick="url('./write')">글쓰기</button>
+					</c:if>
 				</article>
 				
 					<%--  <fmt:requestEncoding value="UTF-8"/>
@@ -133,6 +128,7 @@ footer {
 					<fmt:formatDate type="both" dateStyle="long" timeStyle="long" value="${nowDate }"/><br>
 					<fmt:formatDate pattern="yyyy-mm-dd" value="${nowDate }"/>
 					--%>
+					
 				<%-- <article>
 					fn 이용해서 자료형 데이터 길이 뽑아내기
 					${fn:length(list) }<br>
@@ -147,7 +143,7 @@ footer {
 				</article> --%>
 			</div>
 		</div>
-		<footer> java - servlet - jsp(jsp/jstl/el) - thymeleaf </footer>
+		<footer><%@include file = 'footer.jsp' %> </footer>
 	</div>
 </body>
 </html>

@@ -3,7 +3,7 @@ package com.poseidon.dto;
 //리스트 
 public class BoardDTO {
 	private int no, count;
-	private String title, content, write, date;
+	private String title, content, write, date, mid;
 
 	public int getNo() {
 		return no;
@@ -51,6 +51,14 @@ public class BoardDTO {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public String getMid() {
+		return mid;
+	}
+
+	public void setMid(String mid) {
+		this.mid = mid;
 	}
 
 }

@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.poseidon.dao.BoardDAO;
 import com.poseidon.dto.BoardDTO;
@@ -21,8 +22,16 @@ public class Write extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("write.jsp");
-		rd.forward(request, response);
+		String url="";
+		HttpSession session = request.getSession();
+		if(session.getAttribute("mname")==null) {
+			// url까지 변경
+			response.sendRedirect("./login");
+		} else {
+			//화면만 변경(url 고정)
+			RequestDispatcher rd = request.getRequestDispatcher("write.jsp");
+			rd.forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
