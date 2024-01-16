@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.poseidon.dao.BoardDAO;
 import com.poseidon.dto.BoardDTO;
+import com.poseidon.util.Util;
 
 @WebServlet("/board")
 public class BoardList extends HttpServlet {
@@ -24,9 +25,16 @@ public class BoardList extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		//DAO랑 연결
+		int page = 1;  
+		if(request.getParameter("page")!=null) {
+			page = Util.str2Int2(request.getParameter("page"));
+		}
 		BoardDAO dao = new BoardDAO();
-		List<BoardDTO> list = dao.boardList();
-		
+		List<BoardDTO> list = dao.boardList(page);
+
+		int totalCount = dao.totalCount();
+
+		request.setAttribute("totalCount", totalCount);
 		request.setAttribute("list", list);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("board.jsp");

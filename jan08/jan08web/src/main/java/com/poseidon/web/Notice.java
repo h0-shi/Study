@@ -25,9 +25,7 @@ public class Notice extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		//DAO랑 연결
 		BoardDAO dao = new BoardDAO();
-		List<BoardDTO> list = dao.boardList();
 		
-		request.setAttribute("list", list);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("notice.jsp");
 		rd.forward(request, response);
