@@ -17,22 +17,36 @@ public class Recommand {
 
 		WorkDAO dao = new WorkDAO();
 		
-		List<String> result = new ArrayList<String>();
 		int tNum;
-		int count;
+		boolean saved = false;
+		
 		String type = "";
 		
-		Map<String, String> parts = new HashMap<String, String>();
+		List<List<String>> wList = new ArrayList<List<String>>();
 		
-		List<String> wList = new ArrayList<String>();
-		wList.add("어깨");
-		wList.add("가슴");
-		wList.add("하체");
-		wList.add("등");
-		wList.add("팔");
-		wList.add("전신");
+		List<String> shoulder = new ArrayList<String>();
+		shoulder.add("어깨");
+		wList.add(shoulder);
+
+		List<String> chest = new ArrayList<String>();
+		chest.add("가슴");
+		wList.add(chest);
 		
-//		int sCount, chCount, lCount, bCount, aCount = 0;
+		List<String> leg = new ArrayList<String>();
+		leg.add("하체");
+		wList.add(leg);
+		
+		List<String> back = new ArrayList<String>();
+		back.add("등");
+		wList.add(back);
+		
+		List<String> arm = new ArrayList<String>();
+		arm.add("팔");
+		wList.add(arm);
+		
+		List<String> wBody = new ArrayList<String>();
+		wBody.add("전신");
+		wList.add(wBody);
 
 		A: while (true) {
 //			부위 입력
@@ -51,21 +65,27 @@ public class Recommand {
 			case 0:
 				break A;
 			case 1:
+				tNum--;
 				type = "어깨";
 				break;
 			case 2:
+				tNum--;
 				type = "가슴";
 				break;
 			case 3:
+				tNum--;
 				type = "하체";
 				break;
 			case 4:
+				tNum--;
 				type = "등";
 				break;
 			case 5:
+				tNum--;
 				type = "팔";
 				break;
 			case 6:
+				tNum--;
 				type = "전신";
 				break;
 			}
@@ -76,7 +96,8 @@ public class Recommand {
 			System.out.print("["+type+"]을(를) 선택하셨습니다. ");
 			System.out.println("몇 종류의 "+type+"운동을 하시겠습니까?");
 			System.out.print("입력 : ");
-			count = scan.nextInt();
+			
+			int count = scan.nextInt();
 //			저장된 운동 종류보다 많은 수 입력 시.
 			while (count > list.size()) {
 				System.out.println("\n저장된 운동의 종류보다 큰 수를 입력했습니다.\n다시 입력해주세요.");
@@ -85,40 +106,43 @@ public class Recommand {
 				System.out.print("입력 : ");
 				count = scan.nextInt();
 			}
+//			랜덤한 운동 뽑기
 			for (int i = 0; i < count; i++) {
-
 				int ran = (int) (Math.random() * list.size());
 				String temp = list.get(ran).getwName();
-				if (!parts.containsKey(temp)) {
-					parts.put(temp, type);
-					result.add(temp);
+				
+				if (!wList.get(tNum).contains(temp)) {
+					wList.get(tNum).add(temp);
+					saved = true;
 				} else {
 					i--;
 				}
 			}
+			
 			System.out.println("\n========================================");
 			System.out.println("현재까지의 추천 루틴\n");
 			
 			for (int i = 0; i < wList.size(); i++) {
-				String tTemp = wList.get(i);
-				if(parts.containsValue(tTemp)) {
-					System.out.print(tTemp + " : ");
-					parts.forEach((key, value) -> {
-						if (value.equals(tTemp))
-							System.out.print(key + " | ");
-					});
+				if(wList.get(i).size()>1) {  // 부위 유무 확인
+					System.out.print(wList.get(i).get(0) + " : ");
+					System.out.print(wList.get(i).subList(1,wList.get(i).size()));
 					System.out.println();
 				}
-				
-		}
-			
-//			System.out.println(result.toString());
+		}	
 			System.out.println("========================================");
 		}
-		if (!result.isEmpty()) {
-			System.out.print("\n오늘의 추천 루틴은 ");
-			System.out.println(result.toString() + "입니다.");
-			save(result);
+		if (saved) {
+			System.out.println("\n오늘의 추천 루틴은 \n");
+			for (int i = 0; i < wList.size(); i++) {
+				if(wList.get(i).size()>1) {  // 부위 유무 확인
+					System.out.print(wList.get(i).get(0) + " : ");
+					System.out.print(wList.get(i).subList(1,wList.get(i).size()));
+					System.out.println();
+				}
+			}
+			
+//			저장
+//			save(parts);
 			System.out.println("----------------");
 		} else {
 			System.out.println("아무것도 입력하지 않으셨습니다.");
