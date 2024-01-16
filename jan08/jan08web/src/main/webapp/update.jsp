@@ -46,6 +46,7 @@
 							<input type="text" id="title" name="title" value="${update.title }">
 							<textarea id="summernote" name="content">${update.content }</textarea>
 							<button type="submit">저장하기</button>
+							<input type="hidden" id="no" name="no" value="${update.no }">
 							<input type="hidden" id="no" name="mid" value="${update.mid }">
 						</form>
 					</div>

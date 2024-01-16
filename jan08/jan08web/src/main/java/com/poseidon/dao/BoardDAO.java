@@ -12,7 +12,7 @@ import com.poseidon.dto.BoardDTO;
 
 public class BoardDAO extends AbstractDAO {
 	
-	public List<BoardDTO> boardList() {
+	public List<BoardDTO> boardList(int page) {
 		List<BoardDTO> list = new ArrayList<BoardDTO>();
 		// db정보
 		// DBConnection db = DBConnection.getInstance();
@@ -23,10 +23,11 @@ public class BoardDAO extends AbstractDAO {
 		// rs
 		ResultSet rs = null;
 		// sql
-		String sql = "SELECT * FROM boardview";
+		String sql = "SELECT * FROM boardview LIMIT ?,10";
 
 		try {
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, (page-1)*10);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -45,6 +46,34 @@ public class BoardDAO extends AbstractDAO {
 			close(rs, pstmt, con);
 		}
 		return list;
+	}
+	
+	public int totalCount() {
+		int result = 0;
+		// db정보
+		// DBConnection db = DBConnection.getInstance();
+		// conn 객체
+		Connection con = DBConnection.getInstance().getConnection();
+		// pstmt
+		PreparedStatement pstmt = null;
+		// rs
+		ResultSet rs = null;
+		// sql
+		String sql = "SELECT COUNT(*) FROM board";
+
+		try {
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs, pstmt, con);
+		}
+		return result;
 	}
 
 	public int delete(int no) {
@@ -132,14 +161,17 @@ public class BoardDAO extends AbstractDAO {
 		Connection conn = DBConnection.getInstance().getConnection();
 		PreparedStatement pstmt = null;
 		
-		String sql = "UPDATE board SET board_title=?, board_content=? WHERE board_no=?";
+		String sql = "UPDATE board SET board_title=?, board_content=? "
+				+ "WHERE board_no=? AND mno=(SELECT mno FROM member WHERE mid = ?)";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getTitle());
 			pstmt.setString(2, dto.getContent());
 			pstmt.setInt(3, dto.getNo());
-			
+			pstmt.setString(4, dto.getMid());
+			System.out.println(dto.getMid());
+			System.out.println(dto.getNo());
 			pstmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();

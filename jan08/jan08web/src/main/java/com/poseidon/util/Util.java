@@ -5,6 +5,11 @@ public class Util {
 //	127 = t
 //	127A = f
 	
+	  public static int str2Int2(String str) {
+		      String numberOnly = str.replaceAll("[^0-9]", "");
+		      return Integer.parseInt(numberOnly);
+		   }
+	
 	public static int str2Int(String str) {
 //		A59->59
 		StringBuilder temp = new StringBuilder("");

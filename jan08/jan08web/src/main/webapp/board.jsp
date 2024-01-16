@@ -11,6 +11,7 @@
 <title>게시판</title>
 <link href="./css/index.css" rel="stylesheet" />
 <link href="./css/menu.css" rel="stylesheet" />
+<link href="./css/board.css" rel="stylesheet" />
 <script type="text/javascript" src="./js/menu.js"></script>
 <style type="text/css">
 table {
@@ -107,9 +108,21 @@ footer {
 							</tr>
 						</c:forEach>
 					</table>
+					${totalCount }
+					페이지 수 :	<c:set var="totalPage" value="${totalCount/10 }"/>
+					<fmt:parseNumber integerOnly="true" value="${totalPage }" var="totalPage"/>
+					<c:if test="${totalPage%10 gt 0 }">
+						<c:set var="totalPage" value="${totalPage+1 }"/>
+					</c:if>
+					<c:out value="${totalPage }"/>
+					<div class="paging">
+						<c:forEach begin="1" end="${totalPage }" var="p">
+						<button onclick="paging(${p })">${p }</button>
+						</c:forEach>
+					</div>
 					<c:if test="${sessionScope.mname ne null}">
-					${sessionScope.mname }님 반갑습니다.
 					<button onclick="url('./write')">글쓰기</button>
+					${sessionScope.mname }님 반갑습니다.
 					</c:if>
 				</article>
 				
@@ -145,5 +158,10 @@ footer {
 		</div>
 		<footer><%@include file = 'footer.jsp' %> </footer>
 	</div>
+	<script type="text/javascript">
+		function paging(no){
+			location.href="./board?page="+no;
+		}
+	</script>
 </body>
 </html>

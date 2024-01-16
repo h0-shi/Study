@@ -23,8 +23,6 @@ public class Server02 extends JFrame{
 		    setSize(300, 300);
 		    setVisible(true);
 		    
-		    
-		    
 		    //  채팅 관련 코드
 		    list = new ArrayList<MultiServerThread>();
 		    try {
@@ -45,9 +43,6 @@ public class Server02 extends JFrame{
 		  public static void main(String[] args) {
 		    new Server02();
 		  }//main
-
-		  
-		  
 		  
 		  //  내부 클래스
 		  class MultiServerThread extends Thread {

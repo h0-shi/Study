@@ -46,7 +46,7 @@ public class Delete extends HttpServlet {
 				}
 			} else {
 				System.out.println("작성자 아님");
-				response.sendRedirect("./board");
+				response.sendRedirect("./error.jsp");
 			}
 			
 //			숫자가 아니네? => 에러 표시
