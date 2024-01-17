@@ -108,18 +108,33 @@ footer {
 							</tr>
 						</c:forEach>
 					</table>
-					${totalCount }
-					페이지 수 :	<c:set var="totalPage" value="${totalCount/10 }"/>
+					<c:set var="totalPage" value="${totalCount/10 }"/>
 					<fmt:parseNumber integerOnly="true" value="${totalPage }" var="totalPage"/>
-					<c:if test="${totalPage%10 gt 0 }">
+					<c:if test="${totalCount % 10 gt 0 }">
 						<c:set var="totalPage" value="${totalPage+1 }"/>
 					</c:if>
-					<c:out value="${totalPage }"/>
+					<c:set var="startPage" value="1"/> 
+					<c:if test="${page gt 5 }">
+						<c:set var="startPage" value="${page-5 }"/>
+					</c:if>
+					<c:set var="endPage" value="${startPage+9 }"/>
+					<c:if test="${endPage gt totalPage }">
+						<c:set var="endPage" value="${totalPage }"/>
+					</c:if>
+					
 					<div class="paging">
-						<c:forEach begin="1" end="${totalPage }" var="p">
-						<button onclick="paging(${p })">${p }</button>
+						<button onclick="paging(1)">⏮</button>
+						<button <c:if test="${page-10 lt 1 }" >disabled="disabled"</c:if>
+								onclick="paging(${page-10 })">◀</button>
+								
+						<c:forEach begin="${startPage }" end="${endPage }" var="p">
+						<button <c:if test="${p eq page }">class="currentBtn"</c:if>onclick="paging(${p })">${p }</button>
 						</c:forEach>
+						
+						<button <c:if test="${page+10 gt totalPage }" >disabled="disabled"</c:if>onclick="paging(${page+10 })">▶️</button>
+						<button onclick="paging(${totalPage})">⏩</button>
 					</div>
+					
 					<c:if test="${sessionScope.mname ne null}">
 					<button onclick="url('./write')">글쓰기</button>
 					${sessionScope.mname }님 반갑습니다.
