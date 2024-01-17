@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.seonwoo.db.DBConnection;
 import com.seonwoo.dto.RoutineDTO;
@@ -117,20 +118,31 @@ public class WorkDAO {
 		} finally {
 			close(rs, pstmt, conn);
 		}
-
 		return list;
-
 	}
 
 //	루틴 추가하는 메서드
-	public void insertRountine(String name, String result) {
-		String sql = "INSERT INTO routine (name, wNames) VALUES (?,?)";
+	public void insertRountine(String name, List<String> result) {
+		String sql = "INSERT INTO routine (name, shoulder, chest, leg, back, arm, wBody) VALUES (?,?,?,?,?,?,?)";
 		Connection conn = dbc.getConn();
 		PreparedStatement pstmt = null;
+		
+		String shoulder = result.get(0);
+		String chest = result.get(1);
+		String leg = result.get(2);
+		String back = result.get(3);
+		String arm = result.get(4);
+		String wBody = result.get(5);
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, name);
-			pstmt.setString(2, result);
+			pstmt.setString(2, shoulder);
+			pstmt.setString(3, chest);
+			pstmt.setString(4, leg);
+			pstmt.setString(5, back);
+			pstmt.setString(6, arm);
+			pstmt.setString(7, wBody);
 			pstmt.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -138,31 +150,17 @@ public class WorkDAO {
 			close(null, pstmt, conn);
 		}
 	}
+	
 
 //	추가된 루틴 조회하는 메서드
 	public List<RoutineDTO> showRoutine(String name) {
 		
 		List<RoutineDTO> list = new ArrayList<RoutineDTO>();
 		
-		String sqlMax = "SELECT MAX(JSON_LENGTH(wNames)) FROM routine";
-		int max = 0;
-		
 		Connection conn = dbc.getConn();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		try {
-			pstmt = conn.prepareStatement(sqlMax);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-			    max = rs.getInt(1);
-			    System.out.println("최대 길이: " + max);
-			} else {
-			    // 결과 집합이 비어있는 경우
-			    System.out.println("결과가 없습니다.");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
 //		----------------------------
 		String sql = "SELECT * FROM routine WHERE name=?";
 		
@@ -175,8 +173,13 @@ public class WorkDAO {
 					RoutineDTO dto = new RoutineDTO();
 					dto.setId(rs.getInt(1));
 					dto.setName(rs.getString(2));
-					dto.setwNames(rs.getString(3));
-					dto.setwDate(rs.getDate(4));
+					dto.setShoulder(rs.getString(3));
+					dto.setChest(rs.getString(4));
+					dto.setLeg(rs.getString(5));
+					dto.setBack(rs.getString(6));
+					dto.setArm(rs.getString(7));
+					dto.setwBody(rs.getString(8));
+					dto.setwDate(rs.getDate(9));
 					list.add(dto);
 				}
 			} catch (SQLException e) {
