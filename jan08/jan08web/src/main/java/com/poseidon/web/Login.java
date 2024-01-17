@@ -51,7 +51,6 @@ public class Login extends HttpServlet {
 				session.setAttribute("mname", dto.getMname()); // mname이라는 이름으로 세션 만듬
 				session.setAttribute("mid", dto.getMid());	// mid라는 이름으로 세션 만듬
 
-				
 //				페이지 이동 to board
 				response.sendRedirect("./board");
 			} else {
