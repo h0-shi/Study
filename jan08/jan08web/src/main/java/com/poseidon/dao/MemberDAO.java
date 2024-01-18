@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.RequestDispatcher;
 
+import org.mariadb.jdbc.export.Prepare;
+
 import com.poseidon.dto.MemberDTO;
 
 //로그인, 회원가입, 회원탈퇴, 회원정보
@@ -17,6 +19,7 @@ public class MemberDAO extends AbstractDAO {
 		Connection con = db.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		
 		String sql = "SELECT count(*) as count, mname FROM member WHERE mid=? AND mpw=?";
 
 		try {
@@ -37,6 +40,51 @@ public class MemberDAO extends AbstractDAO {
 		}
 
 		return dto;
+	}
+	
+	public int check(MemberDTO dto) {
+		int result = 1;
+		Connection conn = db.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT COUNT(*) AS count FROM member WHERE mid=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getMid());
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs, pstmt, conn);
+		}
+		
+		return result;
+	}
+	
+	public int join(MemberDTO dto) {
+		int result = 0;
+		Connection conn = db.getConnection();
+		PreparedStatement pstmt = null;
+		String sql = "INSERT INTO member (mname, mid, mpw) VALUES (?,?,?)";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getMname());
+			pstmt.setString(2, dto.getMid());
+			pstmt.setString(3, dto.getMpw());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(null, pstmt, conn);
+		}
+		return result;
 	}
 	
 	public MemberDTO myInfo(MemberDTO dto){

@@ -43,6 +43,7 @@ public class Login extends HttpServlet {
 			
 			MemberDAO dao = new MemberDAO();
 			dto = dao.login(dto);
+			
 			if(dto.getCount()==1) {
 				System.out.println("정상 로그인");
 				
