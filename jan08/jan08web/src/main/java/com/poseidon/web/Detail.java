@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.poseidon.dao.BoardDAO;
 import com.poseidon.dto.BoardDTO;
@@ -29,7 +30,18 @@ public class Detail extends HttpServlet {
 		int no = Util.str2Int(request.getParameter("no"));
 //  db에 질의하기
 		BoardDAO dao = new BoardDAO();
+//		dao.count(no, mid);
+		
+//		로그인 한 회원이라면 조회수 올리기
+		HttpSession session = request.getSession();
+		if(session.getAttribute("mid")!=null) {
+//		bno, mno 필요
+			dao.countUp(no,(String) session.getAttribute("mid"));
+			
+		}
+		
 		BoardDTO dto = dao.detail(no);
+		
 		
 //		System.out.println(dto.getTitle());
 //		System.out.println(dto.getContent()==null);

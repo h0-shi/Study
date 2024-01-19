@@ -29,11 +29,14 @@ public class Delete extends HttpServlet {
 //			숫자네?삭제 진행-> 보드로 이동
 //			번호 받기
 			int no = Util.str2Int(request.getParameter("no"));
-			String mid = request.getParameter("mname");
-			if(session.getAttribute("mid")==mid) {
+			
+			if(Util.intCheck(request.getParameter("no")) && session.getAttribute("mid") != null) {
 //			DAO 일 시키기
 				BoardDAO dao = new BoardDAO();
-				int result = dao.delete(no);
+				BoardDTO dto = new BoardDTO();
+				dto.setNo(no);
+				dto.setMid((String)session.getAttribute("mid"));
+				int result = dao.delete(dto);
 //			잘 삭제되었는지 값 받기
 				System.out.println("삭제여부 : "+result);
 				
@@ -43,6 +46,7 @@ public class Delete extends HttpServlet {
 					response.sendRedirect("./board");
 				} else {
 					response.sendRedirect("./error.jsp");
+					System.out.println("reuslt 에러");
 				}
 			} else {
 				System.out.println("작성자 아님");
