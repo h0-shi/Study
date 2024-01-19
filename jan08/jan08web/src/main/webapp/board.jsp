@@ -89,6 +89,7 @@ footer {
 						<%-- 		${e.no } / ${s.first} / ${s.last } / ${s.index } / ${s.count }<br> --%>
 					</c:forEach>
 				</article>
+				
 				<article>
 				<table><c:choose><c:when test="${fn:length(list) gt 0 }">
 								<tr>
@@ -101,7 +102,8 @@ footer {
 								<h1>출력할 값이 없습니다.</h1></c:otherwise></c:choose><c:forEach items="${list }" var="row">
 							<tr>
 								<td class="w1">${row.no }</td>
-								<td class="title"><a href="detail?no=${row.no }">${row.title }</td>
+								<td class="title"><a href="detail?no=${row.no }">${row.title }
+								<c:if test="${row.comment ne 0}" ><span>&ensp;[${row.comment }]</span></c:if></a></td>
 								<td class="w2">${row.write }</td>
 								<td class="w1">${row.date }</td>
 								<td class="w1">${row.count }</td>
@@ -134,7 +136,6 @@ footer {
 						<button <c:if test="${page+10 gt totalPage }" >disabled="disabled"</c:if>onclick="paging(${page+10 })">▶️</button>
 						<button onclick="paging(${totalPage})">⏩</button>
 					</div>
-					
 					<c:if test="${sessionScope.mname ne null}">
 					<button onclick="url('./write')">글쓰기</button>
 					${sessionScope.mname }님 반갑습니다.

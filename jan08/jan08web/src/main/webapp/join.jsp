@@ -19,8 +19,24 @@
 </style>
 <script type="text/javascript">
 		//$(document).ready(function(){}); 의 다른 모양(축약형)
-		$(function(){
+		// 글로벌 변수
+		
+		let idCheckBool = true;
+		
+		$(function(){ //제이쿼리 시작문 = 제이쿼리 시작합니다.
 			$('.id-alert, .name-alert, .pw-alert').hide();
+			
+			//onchange()
+		//	$("#id").change(function(){
+		//		$('#joinBtn').attr("disabled","disabled");
+		//	});
+			$('#id').on("change keyup paste",function(){
+				$('.id-alert').show();
+				$('.id-alert').html('<p class="alert">당신이 입력한 ID는 '+$('#id').val()+'</p>')
+				if($('#id').val().length>5){
+					idCheck();
+				}
+			});		
 		});
 
 		function check(){
@@ -33,6 +49,11 @@
 			return false;
 		}
 		$('.name-alert').hide();
+		
+		if(!idCheckBool){
+			alert("ID검사를 먼저 실행하세요");
+			return false;
+		}
 		
 		let id = $("#id").val();
 		if(id.length<3||id==""){
@@ -64,9 +85,11 @@
 		function idCheck(){
 			//alert('버튼 실행');
 			let id = $('#id').val();
-			const regEXP = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;//한글 정규식
-			if(id.length<5||regEXP.test(id)){
-				alert("아이디는 5글자 이상의 영어여야함");
+			const regExp = /^[a-z0-9]{5,15}$/;
+			//const regExp = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;//한글 정규식
+			if(id.length<5|| !regExp.test(id)){
+				//alert("아이디는 5글자 이상의 영어여야함");
+				$('.id-alert').html('<p class="alert">아이디는 5자 이상의 영문자로만 가능</p>');
 				$('#id').focus();
 			} else {
 				//alert(id);
@@ -76,13 +99,20 @@
 					dataType : 'text', // 데이터 타입은 뭔지
 					data : {'id' : id}, // 보낼 이름 : 값
 					success: function(result){
-						if(result==0){
-							alert("사용 가능한 ID입니다.");
+						if(result==1){
+							$('.id-alert').append('<p class="alert">이미 사용중인 ID입니다.</p>');
+							idCheckBool = false;
+							$('#joinBtn').attr("disabled","disabled"); // 비활성화 시키기
+							//$('#id').focus();
 						} else {
-							alert("이미 사용중인 ID입니다.")
+							$('.id-alert').append('<p class="alert">사용 가능한 ID입니다.</p>');
+							$('.id-alert .alert').css("color","green");
+							idCheckBool = true;
+							$('#joinBtn').removeAttr("disabled");	//비활성화 제거
+							//$('#name').focus();
 						}
 					},
-					error : function(request, status, error){
+					error : function(request, status, error){ // 접속 불가, 에러 등
 						alert("문제 발생");
 					}
 				});
@@ -130,7 +160,7 @@
 								</div>
 								<div class="input-group mb-2">
 									<button type="reset" class="btn btn-danger">초기화</button>
-									<button type="submit" class="btn btn-primary">가입하기</button>
+									<button id="joinBtn" type="submit" disabled="disabled" class="btn btn-primary">가입하기</button>
 								</div>
 							</form>
 						</div>

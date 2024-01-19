@@ -2,7 +2,7 @@ package com.poseidon.dto;
 
 //리스트 
 public class BoardDTO {
-	private int no, count;
+	private int no, count,comment, delete;
 	private String title, content, write, date, mid;
 
 	public int getNo() {
@@ -59,6 +59,22 @@ public class BoardDTO {
 
 	public void setMid(String mid) {
 		this.mid = mid;
+	}
+
+	public int getComment() {
+		return comment;
+	}
+
+	public void setComment(int comment) {
+		this.comment = comment;
+	}
+
+	public int getDelete() {
+		return delete;
+	}
+
+	public void setDelete(int delete) {
+		this.delete = delete;
 	}
 
 }

@@ -37,6 +37,7 @@ public class BoardDAO extends AbstractDAO {
 				e.setWrite(rs.getString(3));
 				e.setDate(rs.getString(4));
 				e.setCount(rs.getInt("board_count"));
+				e.setComment(rs.getInt(6));
 				list.add(e);
 			}
 
@@ -76,15 +77,15 @@ public class BoardDAO extends AbstractDAO {
 		return result;
 	}
 
-	public int delete(int no) {
+	public int delete(BoardDTO dto) {
 		int result = 0;
-		List<BoardDTO> dto = new ArrayList<BoardDTO>();
 		Connection conn = DBConnection.getInstance().getConnection();
 		PreparedStatement pstmt = null;
-		String sql = "DELETE FROM board WHERE board_no=?";
+		String sql = "UPDATE board SET board_del='0' WHERE board_no=? AND mno=(SELECT mno FROM member WHERE mid=?)";
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, no);
+			pstmt.setInt(1, dto.getNo());
+			pstmt.setString(2, dto.getMid());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -105,7 +106,7 @@ public class BoardDAO extends AbstractDAO {
 		ResultSet rs = null;
 		
 		String sql = "SELECT b.board_no, b.board_title, b.board_content, m.mname as board_write, m.mid, "
-					+ "b.board_date, b.board_count "
+					+ "b.board_date, (SELECT COUNT(*) FROM visitcount WHERE board_no=b.board_no) AS board_count  "
 			        + "FROM board b JOIN member m ON b.mno=m.mno "
 			        + "WHERE b.board_no=?";
 		
@@ -130,6 +131,55 @@ public class BoardDAO extends AbstractDAO {
 		
 		
 		return dto;
+	}
+	
+	public void countUp(int no, String mid) {
+		Connection conn = db.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT COUNT(*) FROM visitcount WHERE board_no=? AND mno="
+				+ "(SELECT mno FROM member WHERE mid=?)";		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			pstmt.setString(2, mid);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				int result = rs.getInt(1);
+				
+				System.out.println("내가 해당 페이지에 방문 한 적이 있나? : "+result);
+				
+				if(result==0) {
+					realCountup(no, mid);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(null, pstmt, conn);
+		}
+		
+	}
+	
+	private void realCountup(int no, String mid ) {
+		Connection conn = db.getConnection();
+		PreparedStatement pstmt = null;
+		String sql = "INSERT INTO visitcount (board_no, mno) "
+				+ "VALUES (?,(SELECT mno FROM member WHERE mid=?))";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			pstmt.setString(2, mid);
+			pstmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(null, pstmt, conn);
+		}
+		
 	}
 
 	public int write(BoardDTO dto) {

@@ -59,3 +59,8 @@ td {
 	background-color: black;
 	color: white;
 }
+span {
+	color: red;
+	font-size: small;
+	font-weight: bolder;
+}
