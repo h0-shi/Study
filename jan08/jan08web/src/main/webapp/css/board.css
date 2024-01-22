@@ -37,7 +37,7 @@ td {
 	text-decoration: none;
 }
 .title a:visited{
-	color: gray;
+	color: black;;
 }
 .title a:link{
 	color: black;
@@ -50,6 +50,7 @@ td {
 	margin: 0 auto;
 	width: 500px;
 	height: 30px;
+	/* background-color: gray; */
 	margin-top: 10px;
 	line-height: 30px;
 	text-align: center;
@@ -58,9 +59,14 @@ td {
 .currentBtn{
 	background-color: black;
 	color: white;
+	
 }
-span {
+span{
+	font-size:small;
 	color: red;
-	font-size: small;
 	font-weight: bolder;
+	background-color: #c0c0c0;
+	min-width: 20px;
+	height: 10px;
+	border-radius: 15px;
 }

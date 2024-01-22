@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.poseidon.db.DBConnection;
 import com.poseidon.dto.BoardDTO;
+import com.poseidon.dto.VisitCountDTO;
 
 public class BoardDAO extends AbstractDAO {
 	
@@ -23,6 +24,7 @@ public class BoardDAO extends AbstractDAO {
 		// rs
 		ResultSet rs = null;
 		// sql
+		
 		String sql = "SELECT * FROM boardview LIMIT ?,10";
 
 		try {
@@ -60,7 +62,7 @@ public class BoardDAO extends AbstractDAO {
 		// rs
 		ResultSet rs = null;
 		// sql
-		String sql = "SELECT COUNT(*) FROM board";
+		String sql = "SELECT COUNT(*) FROM boardview";
 
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -162,7 +164,7 @@ public class BoardDAO extends AbstractDAO {
 		
 	}
 	
-	private void realCountup(int no, String mid ) {
+	private void realCountup(int no, String mid) {
 		Connection conn = db.getConnection();
 		PreparedStatement pstmt = null;
 		String sql = "INSERT INTO visitcount (board_no, mno) "
@@ -229,6 +231,37 @@ public class BoardDAO extends AbstractDAO {
 			close(null, pstmt, conn);
 		}
 		
+	}
+	
+	public List<VisitCountDTO> visitList(String mid) {
+		List<VisitCountDTO> list = new ArrayList<VisitCountDTO>();
 		
+		Connection conn = db.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT * FROM visitview where mid = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				VisitCountDTO d = new VisitCountDTO();
+				d.setMno(rs.getInt(1));
+				d.setMid(rs.getString(2));
+				d.setBoard_no(rs.getInt(3));
+				d.setVdate(rs.getString(4));
+				d.setBoard_title(rs.getString(5));
+				list.add(d);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs, pstmt, conn);
+		}
+		
+		return list;
 	}
 }
