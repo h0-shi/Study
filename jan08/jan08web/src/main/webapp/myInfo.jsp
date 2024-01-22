@@ -8,7 +8,11 @@
 <link href="./css/index.css" rel="stylesheet"/>
 <link href="./css/menu.css" rel="stylesheet"/>
 <script type="text/javascript" src="./js/menu.js"></script>
-
+<style type="text/css">
+td{
+text-align: center;
+}
+</style>
 </head>
 <body>
 <%
@@ -36,25 +40,21 @@ if(session.getAttribute("mid")==null){
 
 					
 				</article>
-<%-- 				<table>
+				<table>
 						<tr>
-							<th>mno</th>
-							<th>mid</th>
-							<th>mpw</th>
-							<th>mname</th>
-							<th>mdate</th>
-							<th>mgrade</th>
+							<th>no</th>
+							<th>title</th>
+							<th>date</th>
 						</tr>
+						<c:forEach items="${visitList }" var="row">
 						<tr>
-							<td>${myInfo.mno}</td>
-							<td>${myInfo.mid}</td>
-							<td>${myInfo.mpw}</td>
-							<td>${myInfo.mname}</td>
-							<td>${myInfo.mdate}</td>
-							<td>${myInfo.mgrade}</td>
+							<td>${row.board_no }</td>
+							<td><a href="./detail?no=${row.board_no }">${row.board_title }</a></td>
+							<td>${row.vdate }</td>
 						</tr>
+						</c:forEach>
 				
-				</table> --%>
+				</table> 
 			</div>
 		</div>
 		<script type="text/javascript">

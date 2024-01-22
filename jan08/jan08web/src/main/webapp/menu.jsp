@@ -8,7 +8,8 @@
 					<li onclick="url('./qna')">문의게시판</li>
 					<li onclick="url('./notice')">공지사항</li>	
 					<li onclick="url('./bootStrap')">부트스트랩</li>	
-					<li onclick="url('./info')">INFO</li><c:choose><c:when test="${sessionScope.mname eq null }">
+					<li onclick="url('./info')">INFO</li>
+					<li onclick="url('./team')">팀</li><c:choose><c:when test="${sessionScope.mname eq null }">
 					<li onclick="url('./login')">로그인</li></c:when><c:otherwise>
 					<li onclick="url('./myInfo')">${sessionScope.mid }님</li>
 					<li onclick="url('./logout')">로그아웃</li>	</c:otherwise>	</c:choose>

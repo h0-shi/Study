@@ -1,7 +1,7 @@
 package com.poseidon.web;
 
 import java.io.IOException;
-import java.lang.reflect.Member;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.poseidon.dao.BoardDAO;
 import com.poseidon.dao.MemberDAO;
 import com.poseidon.dto.MemberDTO;
+import com.poseidon.dto.VisitCountDTO;
 
 /**
  * Servlet implementation class Info
@@ -32,12 +34,21 @@ public class myInfo extends HttpServlet {
 			MemberDTO dto = new MemberDTO();
 			dto.setMid((String) session.getAttribute("mid"));
 			
+			VisitCountDTO vDto = new VisitCountDTO();
+			BoardDAO vDao = new BoardDAO();
+			
+			String mid = (String) session.getAttribute("mid");
+			List<VisitCountDTO> list = vDao.visitList(mid);
+			
+			
 			MemberDAO dao = new MemberDAO();
 //			DTO에 담아서
 			dto = dao.myInfo(dto);
 			
 //			myInfo에 찍자
+			request.setAttribute("visitList", list);
 			request.setAttribute("myInfo", dto);
+			
 			RequestDispatcher rd = request.getRequestDispatcher("myInfo.jsp");
 			rd.forward(request, response);
 			
@@ -54,10 +65,9 @@ public class myInfo extends HttpServlet {
 		System.out.println(newPw);
 		System.out.println(mid);
 		MemberDTO dto = new MemberDTO();
-		
+		MemberDAO dao = new MemberDAO();
 		dto.setMid(mid);
 		dto.setMpw(newPw);
-		MemberDAO dao = new MemberDAO();
 		dao.alterPw(dto);
 	
 		response.sendRedirect("./myInfo");

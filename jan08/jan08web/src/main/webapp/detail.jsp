@@ -7,49 +7,61 @@
 <meta charset="UTF-8">
 <title>톺아보기</title>
 <link href="./css/index.css" rel="stylesheet"/>
+<link href="./css/detail.css" rel="stylesheet"/>
 <link href="./css/menu.css" rel="stylesheet"/>
 <script type="text/javascript" src="./js/menu.js"></script>
-<style type="text/css">
-.detailDIV{
-	width: 900px;
-	height: auto;
-	background-color: #c0c0c0;
-	padding: 10px;
-	box-sizing: border-box;
-}
-.detailTITLE{
-	width: 100%;
-	height: 50px;
-	font-size: large;
-	border-bottom: 5px solid black;
-	line-height: 50px;
-}
-.detailWRITECOUNT{
-	width: 100%;
-	height: 50px;
-}
-.detailWRITE, .detailCOUNT {
-	width: 50%;
-	float: left;
-	height: 50px;
-	line-height: 50px;
-}
-.detailWRITE img{
-	/*이미지와 글자의 정렬*/
-	vertical-align: text-bottom;
-}
-.detailCOUNT {
-	text-align: right;
-}
-.detailCONTENT{
-	width: calc(100% - 20px);
-	min-height: 300px;
-	height: auto;
-	margin: 10px;
-	border: 1px solid green;
-	box-sizing: border-box;
-}
-</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	//alert("준비됨");
+	$("#comment-btn").click(function(){
+		let content =$("#commentcontent").val();
+		let bno = ${detail.no};
+		//alert("content : "+content + " no : "+no);
+		//가상 form 만들기 = 동적 생성
+		//전송 -> content가 5글자 이상인 경우 실행한다.
+		if(content.length < 5){
+			alert("댓글은 5글자 이상 작성해주세요");
+			$("#commentcontent").focus();
+		} else {
+			let form = $('<form></form>');
+			form.attr('name', 'form');
+			form.attr('method', 'post');
+			form.attr('action', './comment');
+			
+			form.append($('<input/>', {type:'hidden', name:'commentcontent', value:content}));//json
+			form.append($('<input/>', {type:'hidden', name:'bno', value:bno}));
+			
+			form.appendTo("body");
+			form.submit();
+			/*
+			let form = document.createElement('form');
+			form.name = 'form';
+			form.method = 'post';
+			form.action = './comment';
+			//붙이기
+			let text = document.createElement('input');
+			text.setAttribute("type","hidden");
+			text.setAttribute("name","commentcontent");
+			text.setAttribute("value",content);
+			//붙이기
+			let no = document.createElement('input');
+			no.setAttribute("type","hidden");
+			no.setAttribute("name","bno");
+			no.setAttribute("value",${detail.no});
+			// form에다가 붙이기
+			form.appendChild(text);
+			form.appendChild(no);
+			//전송하기
+			document.body.appendChild(form);
+			form.submit();
+			*/
+			
+		}
+	});
+});
+
+</script>
 </head>
 <body>
 	<div class="container">
@@ -64,41 +76,76 @@
 						<div class="detailTITLE">
 							${detail.title }
 						</div>
+						
 						<div class="detailWRITECOUNT">
-							<div class="detailWRITE">${detail.write } / ${detail.mid } / ${sessionScope.mid }
-							<c:if test="${sessionScope.mname != null && detail.mid eq sessionScope.mid }">
-							<img alt = "수정" src = "./img/edit.png" onclick="update()">
-							<img alt = "삭제" src = "./img/delete.png" onclick="del()">
-							</c:if>
+							<div class="detailWRITE">${detail.write }
+								<c:if test="${sessionScope.mname ne null && detail.mid eq sessionScope.mid }">
+								<img alt = "수정" src = "./img/edit.png" onclick="update()">
+								<img alt = "삭제" src = "./img/delete.png" onclick="del()">
+								</c:if>
 							</div>
+				
 							<div class="detailCOUNT">${detail.count }</div>
 						</div>
+						
 						<div class="detailCONTENT">
 							${detail.content }
 						</div>
 					</div>
+						<c:if test="${sessionScope.mid ne null }">
+							<div class="comment-write">
+								<div class="comment-form">
+									<!-- 여기에 댓글 작성창 만들거래요 -->
+									<textarea id="commentcontent"></textarea>
+									<button id="comment-btn">댓글 작성</button>
+								</div>
+							</div>
+						</c:if>
+							<!-- 댓글 출력창 -->
+						<div class="comments">
+							<c:forEach items="${commentList }" var="co">
+								<div class="comment"></div>
+									<div class="chead">
+									<!-- 여기가 제목단 -->
+										<div class="cname">${co.mname }님
+											<c:if test="${sessionScope.mname ne null && co.mid eq sessionScope.mid }">
+												<img alt = "삭제" src = "./img/delete.png" onclick="commentDel(${co.cno})">
+												<img alt = "수정" src = "./img/edit.png" onclick="CommentUpdate(${co.cno})">
+											</c:if>
+										</div>
+										<div class="cdate">
+											${co.cdate }
+										</div>
+									</div>
+								<div class="ccomment">${co.comment }</div>
+							</c:forEach>
+						</div>
 					<button onclick="url('./board')">게시판으로</button>
-					<input type="hidden" name="mid" value="${detail.mid }">
+				</article>
+				<article>
+					하단 푸터 뭐시기
 				</article>
 			</div>
 		</div>
-		
-		<script type="text/javascript">
-			function del(){
-				//alert("삭제를 눌렀습니다.");
-				var ch = confirm("삭제하시겠습니까?")
-				if(ch){
-				location.href="./delete?no=${detail.no }";
-				}
-			}
-			function update(){
-				var ch = confirm("글을 수정하시겠습니까?");
-				if(ch){
-					location.href="./update?no=${detail.no}";
-				}
-			}
-		</script>
 		<footer><%@include file = 'footer.jsp' %> </footer>
 	</div>
+	<script type="text/javascript">
+		function del(){
+			//alert("삭제를 눌렀습니다.");
+			if(confirm("삭제하시겠습니까?")){
+			location.href="./delete?no=${detail.no }";
+			}
+		}
+		function update(){
+			if(confirm("글을 수정하시겠습니까?")){
+				location.href="./update?no=${detail.no}";
+			}
+		}
+		function commentDel(cno){
+			if(confirm("댓글을 삭제하시겠습니까?")){
+				location.href ='./commentDel?no=${detail.no}&cno='+cno;
+			}
+		}
+	</script>
 </body>
 </html>

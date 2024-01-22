@@ -14,65 +14,7 @@
 <link href="./css/board.css" rel="stylesheet" />
 <script type="text/javascript" src="./js/menu.js"></script>
 <style type="text/css">
-table {
-	width: 900px;
-	height: 400px;
-	/*border 사이의 틈 붙이기*/
-	border-collapse: collapse;
-	margin: 0 auto;
-	padding-top: 10px;
-}
 
-tr:hover {
-	background-color: gray;
-}
-
-th {
-	border-bottom: 2px solid black;
-	background-color: gray;
-}
-
-td {
-	border-bottom: 1px solid gray;
-	text-align: center;
-}
-
-.title {
-	text-align: left;
-	width: 50%;
-}
-
-.w1 {
-	width: 10%;
-}
-
-.w2 {
-	width: 20%;
-}
-
-footer {
-	position: fixed;
-	bottom: 0px;
-	width: 100%;
-	height: 30px;
-	background-color: gray;
-}
-
-.title a {
-	text-decoration: none;
-}
-
-.title a:visited {
-	color: black;
-}
-
-.title a:Link {
-	color: black;
-}
-
-.title a:hover {
-	color: red;
-}
 </style>
 </head>
 <body>
@@ -108,6 +50,7 @@ footer {
 								<td class="w1">${row.date }</td>
 								<td class="w1">${row.count }</td>
 							</tr>
+							${totalCount }
 						</c:forEach>
 					</table>
 					<c:set var="totalPage" value="${totalCount/10 }"/>
