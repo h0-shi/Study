@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.poseidon.dto.CommentDTO;
+import com.poseidon.util.Util;
 
 public class CommentDAO extends AbstractDAO {
 	
@@ -15,13 +16,14 @@ public class CommentDAO extends AbstractDAO {
 		Connection con = db.getConnection();
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String sql = "INSERT INTO comment (ccomment, board_no, mno) VALUES (?,?,(SELECT mno FROM member WHERE mid = ?))";
+		String sql = "INSERT INTO comment (ccomment, board_no, mno, cip) VALUES (?,?,(SELECT mno FROM member WHERE mid = ?),?)";
 		
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, dto.getComment());
 			pstmt.setInt(2,dto.getBoard_no());
 			pstmt.setString(3, dto.getMid());
+			pstmt.setString(4, dto.getIp());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -55,6 +57,7 @@ public class CommentDAO extends AbstractDAO {
 				dto.setMid(rs.getString("mid"));
 				dto.setMname(rs.getString("mname"));
 				dto.setClike(rs.getInt("clike"));
+				dto.setIp(Util.ipChange(rs.getString("cip")));
 				list.add(dto);
 			}
 		} catch (SQLException e) {

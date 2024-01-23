@@ -2,7 +2,7 @@ package com.poseidon.dto;
 
 public class CommentDTO {
 	private int cno, mno, board_no, clike;
-	private String comment, mname, cdate, mid;
+	private String comment, mname, cdate, mid, ip;
 	public int getCno() {
 		return cno;
 	}
@@ -50,6 +50,12 @@ public class CommentDTO {
 	}
 	public void setClike(int clike) {
 		this.clike = clike;
+	}
+	public String getIp() {
+		return ip;
+	}
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 
 }

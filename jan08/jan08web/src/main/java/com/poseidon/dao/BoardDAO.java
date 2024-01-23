@@ -5,10 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.poseidon.db.DBConnection;
 import com.poseidon.dto.BoardDTO;
+import com.poseidon.dto.MemberDTO;
 import com.poseidon.dto.VisitCountDTO;
 
 public class BoardDAO extends AbstractDAO {
@@ -108,7 +111,7 @@ public class BoardDAO extends AbstractDAO {
 		ResultSet rs = null;
 		
 		String sql = "SELECT b.board_no, b.board_title, b.board_content, m.mname as board_write, m.mid, "
-					+ "b.board_date, (SELECT COUNT(*) FROM visitcount WHERE board_no=b.board_no) AS board_count  "
+					+ "b.board_date, board_ip, (SELECT COUNT(*) FROM visitcount WHERE board_no=b.board_no) AS board_count  "
 			        + "FROM board b JOIN member m ON b.mno=m.mno "
 			        + "WHERE b.board_no=?";
 		
@@ -123,6 +126,7 @@ public class BoardDAO extends AbstractDAO {
 				dto.setContent(rs.getString("board_content"));
 				dto.setWrite(rs.getString("board_write"));
 				dto.setDate(rs.getString("board_date"));
+				dto.setIp(rs.getString("board_ip"));
 				dto.setCount(rs.getInt("board_count"));
 				dto.setMid(rs.getString("mid"));
 			}
@@ -190,14 +194,15 @@ public class BoardDAO extends AbstractDAO {
 		Connection conn = DBConnection.getInstance().getConnection();
 		PreparedStatement pstmt = null;
 		
-		String sql = "INSERT INTO board (board_title, board_content, mno) "
-				+ "VALUES (?,?,(SELECT mno FROM member WHERE mid=?))";
+		String sql = "INSERT INTO board (board_title, board_content, mno, board_ip) "
+				+ "VALUES (?,?,(SELECT mno FROM member WHERE mid=?),?)";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getTitle());
 			pstmt.setString(2, dto.getContent());
 			pstmt.setString(3, dto.getMid());
+			pstmt.setString(4, dto.getIp());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -233,35 +238,34 @@ public class BoardDAO extends AbstractDAO {
 		
 	}
 	
-	public List<VisitCountDTO> visitList(String mid) {
-		List<VisitCountDTO> list = new ArrayList<VisitCountDTO>();
-		
-		Connection conn = db.getConnection();
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		String sql = "SELECT * FROM visitview where mid = ?";
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, mid);
+
+	public List<Map<String, Object>> readData(MemberDTO dto) {
+		 List<Map<String, Object>> data = new ArrayList<Map<String,Object>>();
+		 Connection con = db.getConnection();
+		 PreparedStatement pstmt = null;
+		 ResultSet rs = null;
+		 String sql = "SELECT b.board_no, b.board_title, v.vdate FROM visitcount v "
+		 		+ "JOIN board b ON b.board_no = v.board_no WHERE v.mno = (SELECT mno FROM member WHERE MID=?)"
+		 		+ "ORDER by vdate DESC";
+		 
+		 try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, dto.getMid());
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				VisitCountDTO d = new VisitCountDTO();
-				d.setMno(rs.getInt(1));
-				d.setMid(rs.getString(2));
-				d.setBoard_no(rs.getInt(3));
-				d.setVdate(rs.getString(4));
-				d.setBoard_title(rs.getString(5));
-				list.add(d);
+				Map<String, Object> e = new HashMap<String, Object>();
+				e.put("board_no", rs.getInt("board_no"));
+				e.put("board_title", rs.getString("board_title"));
+				e.put("vdate", rs.getString("vdate"));
+				data.add(e);
 			}
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			close(rs, pstmt, conn);
+			close(rs, pstmt, con);
 		}
-		
-		return list;
+		return data;
 	}
 }

@@ -34,5 +34,25 @@ public class AbstractDAO {
 			}
 		}
 	}
+	
+	public void logWrite(String ip, String url, String data) {
+		Connection con = db.getConnection();
+		PreparedStatement pstmt = null;
+		String sql ="INSERT INTO iplog (iip,iurl,idata) VALUES (?,?,?)";
+		
+		try {
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ip);
+			pstmt.setString(2, url);
+			pstmt.setString(3, data);
+			
+			pstmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(null, pstmt, con);
+		}
+		
+	}
 
 }

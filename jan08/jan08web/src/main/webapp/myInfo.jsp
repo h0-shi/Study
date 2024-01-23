@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,19 +42,21 @@ if(session.getAttribute("mid")==null){
 					
 				</article>
 				<table>
+					<tr>
+						<th>no</th>
+						<th>title</th>
+						<th>date</th>
+					</tr>
+					<c:forEach items="${readData }" var="d">
 						<tr>
-							<th>no</th>
-							<th>title</th>
-							<th>date</th>
-						</tr>
-						<c:forEach items="${visitList }" var="row">
-						<tr>
-							<td>${row.board_no }</td>
-							<td><a href="./detail?no=${row.board_no }">${row.board_title }</a></td>
-							<td>${row.vdate }</td>
-						</tr>
-						</c:forEach>
-				
+							<td>${d.board_no }</td>
+								<td onclick="location.href='./detail?no=${d.board_no }'">${d.board_title }</td>
+							<td>
+								<fmt:parseDate value="${d.vdate }" var="date" pattern="yyyy-mm-dd HH:mm:ss"/>
+								<fmt:formatDate value="${date }" pattern="yyyy년 MM월 dd일 HH시 mm분 ss초"/>
+							</td>
+						</tr>						
+					</c:forEach>
 				</table> 
 			</div>
 		</div>

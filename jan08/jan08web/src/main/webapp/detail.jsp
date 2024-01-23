@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,6 +35,7 @@ $(document).ready(function(){
 			
 			form.appendTo("body");
 			form.submit();
+			
 			/*
 			let form = document.createElement('form');
 			form.name = 'form';
@@ -56,7 +58,6 @@ $(document).ready(function(){
 			document.body.appendChild(form);
 			form.submit();
 			*/
-			
 		}
 	});
 });
@@ -84,8 +85,7 @@ $(document).ready(function(){
 								<img alt = "삭제" src = "./img/delete.png" onclick="del()">
 								</c:if>
 							</div>
-				
-							<div class="detailCOUNT">${detail.count }</div>
+							<div class="detailCOUNT">${detail.ip } / ${detail.count }</div>
 						</div>
 						
 						<div class="detailCONTENT">
@@ -107,20 +107,27 @@ $(document).ready(function(){
 								<div class="comment"></div>
 									<div class="chead">
 									<!-- 여기가 제목단 -->
-										<div class="cname">${co.mname }님
+										<div class="cname">${co.mname }님 
 											<c:if test="${sessionScope.mname ne null && co.mid eq sessionScope.mid }">
 												<img alt = "삭제" src = "./img/delete.png" onclick="commentDel(${co.cno})">
 												<img alt = "수정" src = "./img/edit.png" onclick="CommentUpdate(${co.cno})">
 											</c:if>
 										</div>
 										<div class="cdate">
-											${co.cdate }
+											${co.ip } /	${co.cdate }
 										</div>
 									</div>
 								<div class="ccomment">${co.comment }</div>
 							</c:forEach>
 						</div>
-					<button onclick="url('./board')">게시판으로</button>
+						<c:choose>
+							<c:when test="${param.page ne null }">
+								<button onclick="url('./board?page=${param.page }')">게시판으로</button>
+							</c:when>
+							<c:otherwise>
+								<button onclick="url('./board')">게시판으로</button>
+							</c:otherwise>
+						</c:choose>
 				</article>
 				<article>
 					하단 푸터 뭐시기

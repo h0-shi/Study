@@ -44,7 +44,7 @@
 								<h1>출력할 값이 없습니다.</h1></c:otherwise></c:choose><c:forEach items="${list }" var="row">
 							<tr>
 								<td class="w1">${row.no }</td>
-								<td class="title"><a href="detail?no=${row.no }">${row.title }
+								<td class="title"><a href="detail?no=${row.no }&page=${page}">${row.title }
 								<c:if test="${row.comment ne 0}" ><span>&ensp;[${row.comment }]</span></c:if></a></td>
 								<td class="w2">${row.write }</td>
 								<td class="w1">${row.date }</td>
@@ -53,6 +53,7 @@
 							${totalCount }
 						</c:forEach>
 					</table>
+					
 					<c:set var="totalPage" value="${totalCount/10 }"/>
 					<fmt:parseNumber integerOnly="true" value="${totalPage }" var="totalPage"/>
 					<c:if test="${totalCount % 10 gt 0 }">
