@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.poseidon.dao.BoardDAO;
 import com.poseidon.dto.BoardDTO;
+import com.poseidon.util.Util;
 
 @WebServlet("/write")
 public class Write extends HttpServlet {
@@ -45,12 +46,14 @@ public class Write extends HttpServlet {
 		} else {
 //			로그인 했다면 로직 수행
 			String title = request.getParameter("title");
+			title = Util.removeTag(title);
 			String content = request.getParameter("content");
 			
 //			DAO에 write 메서드 만들기
 			BoardDTO dto = new BoardDTO();
 			dto.setTitle(title);
 			dto.setContent(content);
+			dto.setIp(Util.getIP(request));
 			
 //			session .get으로 얻어는건 모두 object화 된다.
 			dto.setMid((String)session.getAttribute("mid")); // session에서 mid 가져온다.

@@ -3,7 +3,7 @@ package com.poseidon.dto;
 //리스트 
 public class BoardDTO {
 	private int no, count,comment, delete;
-	private String title, content, write, date, mid;
+	private String title, content, write, date, mid, ip;
 
 	public int getNo() {
 		return no;
@@ -75,6 +75,14 @@ public class BoardDTO {
 
 	public void setDelete(int delete) {
 		this.delete = delete;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 
 }

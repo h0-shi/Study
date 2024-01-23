@@ -1,7 +1,9 @@
 package com.poseidon.web;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.poseidon.dao.BoardDAO;
+import com.poseidon.dao.LogDAO;
 import com.poseidon.dto.BoardDTO;
 import com.poseidon.util.Util;
 
@@ -29,6 +32,17 @@ public class BoardList extends HttpServlet {
 		if(request.getParameter("page")!=null) {
 			page = Util.str2Int2(request.getParameter("page"));
 		}
+
+		//아이피 저장_map 사용
+		Map<String, Object> log = new HashMap<String, Object>();
+		log.put("ip",Util.getIP(request));
+		log.put("url", "./detail");
+		log.put("data", "page="+request.getParameter("page"));
+		
+		LogDAO logDAO = new LogDAO();
+		logDAO.write(log);
+		
+		
 		BoardDAO dao = new BoardDAO();
 		List<BoardDTO> list = dao.boardList(page);
 		int totalCount = dao.totalCount();

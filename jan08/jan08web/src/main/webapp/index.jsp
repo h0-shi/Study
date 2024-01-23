@@ -72,7 +72,7 @@
 			</div>
 		</div>
 		<footer>
-		
+			<c:import url ="footer.jsp"/>
 		</footer>
 	</div>
 </body>

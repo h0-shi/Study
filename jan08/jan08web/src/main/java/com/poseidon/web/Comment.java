@@ -30,19 +30,28 @@ public class Comment extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		//오는 값 받기
 		HttpSession session = request.getSession();
+		
+		
 		if(session.getAttribute("mid")!=null && session.getAttribute("mname")!=null) {
 			String commentcontent = request.getParameter("commentcontent");
 			String bno = request.getParameter("bno");
+			//특수기호 제거 <,> 변경하기
+			commentcontent = Util.removeTag(commentcontent);
+
+			//줄바꿈 처리하기 \r \n \nr =rn
+			commentcontent = Util.addBR(commentcontent);
+			
 			if(commentcontent!=null&&bno != null) {
 				CommentDTO dto = new CommentDTO();
 				dto.setBoard_no(Util.str2Int(bno));
 				dto.setMid((String) session.getAttribute("mid"));
+				dto.setIp(Util.getIP(request));
 				
 				//저장
 				dto.setComment(commentcontent);
 				CommentDAO dao = new CommentDAO();
 				int result = dao.commentWrite(dto);
-				
+//				dao.logWrite(Util.getIP(request), getServletName(),"bno:"+bno+", 내용:"+dto.getComment());
 
 				
 				if(result == 1) {
