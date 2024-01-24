@@ -91,7 +91,7 @@ public class Util {
 		int idx2 = str.indexOf(".",idx);
 
 		sb.append(str.substring(0,idx));
-		sb.append(".♡");
+		sb.append("☆");
 		sb.append(str.substring(idx2));
 		
 		str = sb.toString();

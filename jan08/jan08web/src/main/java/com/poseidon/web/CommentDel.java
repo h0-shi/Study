@@ -1,6 +1,8 @@
 package com.poseidon.web;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +28,7 @@ public class CommentDel extends HttpServlet {
 		System.out.println(request.getParameter("cno"));
 		System.out.println(request.getParameter("no"));
 		if(session.getAttribute("mid")!=null&&request.getParameter("no")!=null) {
+		
 			CommentDTO dto = new CommentDTO();
 			dto.setMid((String) session.getAttribute("mid"));
 			dto.setCno(Util.str2Int(request.getParameter("cno")));
@@ -49,6 +52,20 @@ public class CommentDel extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("요청이 들어옴");
+		System.out.println(request.getParameter("no"));
+		HttpSession session = request.getSession();
+		
+		CommentDAO dao = new CommentDAO();
+		CommentDTO dto = new CommentDTO();
+		int result = 0; 
+		if(session.getAttribute("mid")!=null&&request.getParameter("no")!=null) {
+			dto.setMid((String) session.getAttribute("mid"));
+			dto.setCno(Util.str2Int(request.getParameter("no")));
+			result = dao.commentDelete(dto);
+		}
+		PrintWriter pw = response.getWriter();
+		pw.print(result);
 	}
 
 }
