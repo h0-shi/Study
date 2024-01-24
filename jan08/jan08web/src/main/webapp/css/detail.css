@@ -87,8 +87,7 @@
 	width: 100%;
 	min-height: 30px;
 	background-color: #D5F0C1;
-	border-top: 1px solid B4BDFF;
-	border-left: 3px solid B4BDFF;
+	border-top: 1px solid #B4BDFF;
 }
 .cname, .cdate{
 	width: 50%;

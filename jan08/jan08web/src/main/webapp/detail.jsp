@@ -10,11 +10,59 @@
 <link href="./css/index.css" rel="stylesheet"/>
 <link href="./css/detail.css" rel="stylesheet"/>
 <link href="./css/menu.css" rel="stylesheet"/>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 <script type="text/javascript" src="./js/menu.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	//alert("준비됨");
+	$(".comment-write").hide();
+
+	//댓글 삭제 버튼을 눌렀습니다.
+	$(".commentDelete").click(function(){
+		//alert("삭제버튼을 눌렀습니다.");
+		//부모객체 찾아가기 = this
+		if(confirm("삭제하시겠습니까?")){
+			let cno = $(this).siblings(".cno").val();
+			let par = $(this).closest(".comment");
+			$.ajax({
+				url: './commentDel', 
+				type: 'post',
+				dataType: 'text',
+				data: {'no' : cno},
+				success: function(result){
+					if(result==1){
+						alert("");
+						par.hide();
+					} else {
+						alert(cno);
+					}
+				},
+				error: function(request, status, error){ //통신오류
+					alert("에러 발생");
+				}
+			});
+		}
+		
+	});
+	
+	//댓글 수정 버튼을 눌렀습니다.
+	$(".commentUpdate").click(function(){
+		//alert("삭제버튼을 눌렀습니다.");
+		//부모객체 찾아가기 = this
+		if(confirm("수정하시겠습니까?")){
+			let cno = $(this).siblings(".cno").val();
+			let comment = $(this).parents(".chead").siblings(".ccomment").text();
+			alert(cno+" : "+comment)
+		}
+		
+	});
+	
+	//댓글작성 누르면 댓글창 나옴
+	$(".xi-comment-o").click(function(){
+		$(".xi-comment-o").hide();
+		$(".comment-write").slideToggle('slow');
+	});
+	
 	$("#comment-btn").click(function(){
 		let content =$("#commentcontent").val();
 		let bno = ${detail.no};
@@ -93,7 +141,8 @@ $(document).ready(function(){
 						</div>
 					</div>
 						<c:if test="${sessionScope.mid ne null }">
-							<div class="comment-write">
+							<button class="xi-comment-o">댓글 작성</button>
+							<div class="comment-write" style="display:none">
 								<div class="comment-form">
 									<!-- 여기에 댓글 작성창 만들거래요 -->
 									<textarea id="commentcontent"></textarea>
@@ -104,20 +153,20 @@ $(document).ready(function(){
 							<!-- 댓글 출력창 -->
 						<div class="comments">
 							<c:forEach items="${commentList }" var="co">
-								<div class="comment"></div>
+								<div class="comment">
 									<div class="chead">
 									<!-- 여기가 제목단 -->
 										<div class="cname">${co.mname }님 
 											<c:if test="${sessionScope.mname ne null && co.mid eq sessionScope.mid }">
-												<img alt = "삭제" src = "./img/delete.png" onclick="commentDel(${co.cno})">
-												<img alt = "수정" src = "./img/edit.png" onclick="CommentUpdate(${co.cno})">
+												<img alt = "수정" src = "./img/edit.png" class="commentUpdate">
+												<img alt = "삭제" src = "./img/delete.png" class="commentDelete">
+												<input type="hidden" class="cno" value="${co.cno }">
 											</c:if>
 										</div>
-										<div class="cdate">
-											${co.ip } /	${co.cdate }
-										</div>
+										<div class="cdate">	${co.ip } /	${co.cdate }</div>
 									</div>
-								<div class="ccomment">${co.comment }</div>
+									<div class="ccomment">${co.comment }</div>
+									</div>
 							</c:forEach>
 						</div>
 						<c:choose>
@@ -148,11 +197,13 @@ $(document).ready(function(){
 				location.href="./update?no=${detail.no}";
 			}
 		}
+		/*
 		function commentDel(cno){
 			if(confirm("댓글을 삭제하시겠습니까?")){
 				location.href ='./commentDel?no=${detail.no}&cno='+cno;
 			}
 		}
+		*/
 	</script>
 </body>
 </html>

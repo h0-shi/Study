@@ -73,11 +73,13 @@ public class CommentDAO extends AbstractDAO {
 		
 		Connection con = db.getConnection();
 		PreparedStatement pstmt = null;
-		String sql = "UPDATE comment SET cdel='0' WHERE cno=? AND board_no=?";
+		String sql = "UPDATE commentview SET cdel='0' WHERE cno=? AND mid=?";
 		try {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, dto.getCno());
-			pstmt.setInt(2, dto.getBoard_no());
+			pstmt.setString(2, dto.getMid());
+			System.out.println(dto.getCno());
+			System.out.println(dto.getMid());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
