@@ -51,8 +51,21 @@ $(document).ready(function(){
 		//부모객체 찾아가기 = this
 		if(confirm("수정하시겠습니까?")){
 			let cno = $(this).siblings(".cno").val();
-			let comment = $(this).parents(".chead").siblings(".ccomment").text();
-			alert(cno+" : "+comment)
+			let comment = $(this).parents(".chead").siblings(".ccomment");
+			let recommentBox = '<div class="recommentBox">';
+			$(".commentUpdate").hide();
+			$(".commentDelete").hide();
+			comment.css('height','110');
+			comment.css('padding-top','10px');
+			//특수기호 살리기
+			let commentChange = comment.html().replaceAll("<br>", "\r\n");
+			recommentBox += '<form action="./cedit" method="post">';
+			recommentBox += '<textarea id ="" name="comment">'+commentChange+'</textarea>';
+			recommentBox += '<input type="hidden" name="cno" value="'+ cno +'">';
+			recommentBox += '<button type="submit">댓글수정</button>';
+			recommentBox += '</form></div>';
+			
+			comment.html(recommentBox);
 		}
 		
 	});
@@ -165,7 +178,7 @@ $(document).ready(function(){
 										</div>
 										<div class="cdate">	${co.ip } /	${co.cdate }</div>
 									</div>
-									<div class="ccomment">${co.comment }</div>
+										<div class="ccomment">${co.comment }</div>
 									</div>
 							</c:forEach>
 						</div>
