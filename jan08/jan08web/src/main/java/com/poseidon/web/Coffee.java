@@ -15,11 +15,11 @@ import com.poseidon.dao.BeverageDAO;
 import com.poseidon.dto.BeverageDTO;
 import com.poseidon.util.Util;
 
-@WebServlet("/qna")
-public class QnA extends HttpServlet {
+@WebServlet("/coffee")
+public class Coffee extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public QnA() {
+    public Coffee() {
         super();
     }
 
@@ -42,7 +42,7 @@ public class QnA extends HttpServlet {
 		request.setAttribute("ice", ice);
 		
 		
-		RequestDispatcher rd = request.getRequestDispatcher("qna.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("coffee.jsp");
 		
 		rd.forward(request, response);
 	}

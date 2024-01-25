@@ -1,0 +1,43 @@
+@charset "UTF-8";
+.result{
+	float : left;
+	margin: 0px 10px;
+	border-collapse: collapse;
+	width:250px;
+}
+.title{
+	float : left;
+	margin: 0px 10px;
+	border-collapse: collapse;
+	width:250px;
+}
+.hotresult {
+	background-color: #F28C95;
+	border-bottom: 2px solid #AB3C3D;
+	text-align: center;
+}
+.iceresult {
+	background-color: #7BC8E3;
+	border-bottom: 2px solid #3144E3;
+	text-align: center;
+}
+
+td {
+	border-bottom: 1px solid gray;
+	text-align: center;
+}
+.title th {
+	background-color: #D5F0C1;
+	text-align: center;
+	border: 1px solid #80BCBD;
+}
+.select{
+	margin: 0px 10px;
+	
+}
+.commit{
+	margin: 10px;
+}
+.subtitle{
+	margin-left: 220px;
+}

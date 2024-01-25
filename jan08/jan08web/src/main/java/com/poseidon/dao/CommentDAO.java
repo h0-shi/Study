@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mariadb.jdbc.export.Prepare;
+
 import com.poseidon.dto.CommentDTO;
 import com.poseidon.util.Util;
 
@@ -78,14 +80,39 @@ public class CommentDAO extends AbstractDAO {
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, dto.getCno());
 			pstmt.setString(2, dto.getMid());
-			System.out.println(dto.getCno());
-			System.out.println(dto.getMid());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return result;
 		
+	}
+
+	public int commentUpdate(CommentDTO dto) {
+		Connection conn = db.getConnection();
+		PreparedStatement pstmt = null;
+		String sql = "UPDATE comment SET ccomment=? "
+				+ "WHERE cno=? AND mno=(SELECT mno FROM member WHERE mid=?)";
+		int result = 0;
+		
+		System.out.println("dao진입");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getComment());
+			pstmt.setInt(2, dto.getCno());
+			pstmt.setString(3, dto.getMid());
+			System.out.println(dto.getMid()+":"+dto.getCno()+":"+dto.getComment());
+			result = pstmt.executeUpdate();
+			
+			System.out.println(result);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(null, pstmt, conn);
+		}
+		
+		return result;
 	}
 	
 

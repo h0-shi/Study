@@ -50,7 +50,6 @@
 								<td class="w1">${row.date }</td>
 								<td class="w1">${row.count }</td>
 							</tr>
-							${totalCount }
 						</c:forEach>
 					</table>
 					

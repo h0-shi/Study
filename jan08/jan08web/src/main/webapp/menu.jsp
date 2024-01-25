@@ -9,6 +9,7 @@
 					<li onclick="url('./notice')">공지사항</li>	
 					<li onclick="url('./bootStrap')">부트스트랩</li>	
 					<li onclick="url('./info')">INFO</li>
+					<li onclick="url('./coffee')">커피</li>
 					<li onclick="url('./team')">팀</li><c:choose><c:when test="${sessionScope.mname eq null }">
 					<li onclick="url('./login')">로그인</li></c:when><c:otherwise>
 					<li onclick="url('./myInfo')">${sessionScope.mid }님</li>

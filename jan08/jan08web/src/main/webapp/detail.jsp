@@ -52,20 +52,56 @@ $(document).ready(function(){
 		if(confirm("수정하시겠습니까?")){
 			let cno = $(this).siblings(".cno").val();
 			let comment = $(this).parents(".chead").siblings(".ccomment");
-			let recommentBox = '<div class="recommentBox">';
 			$(".commentUpdate").hide();
 			$(".commentDelete").hide();
-			comment.css('height','110');
+			comment.css('height','110px');
 			comment.css('padding-top','10px');
 			//특수기호 살리기
 			let commentChange = comment.html().replaceAll("<br>", "\r\n");
-			recommentBox += '<form action="./cedit" method="post">';
-			recommentBox += '<textarea id ="" name="comment">'+commentChange+'</textarea>';
-			recommentBox += '<input type="hidden" name="cno" value="'+ cno +'">';
-			recommentBox += '<button type="submit">댓글수정</button>';
-			recommentBox += '</form></div>';
-			
+			let recommentBox = '<div class="recommentBox">';
+			recommentBox += '<textarea class="commentcontent">' + commentChange + '</textarea>';
+			recommentBox += '<input type="hidden" name="cno" value="' + cno + '">';
+			recommentBox += '<button class="comment-btn">댓글 수정</button>';
+			recommentBox += '</div>';
 			comment.html(recommentBox);
+			
+		}
+	});
+	
+	//댓글수정  .comment-btn버튼 눌렀을 때 .cno값, .commentcontent값 가져오는 명령 만들기
+	// 2024-01-25
+	$(document).on('click',".comment-btn", function (){
+		if(confirm('수정하시겠습니까?')){
+			let cno = $(this).prev().val();
+			let recomment = $('.commentcontent').val();
+			let comment = $(this).parents(".ccomment");//댓글 위치
+			
+			$.ajax({
+				url : './recomment',
+				type : 'post',
+				dataType : 'text',
+				data : {'cno': cno, 'comment': recomment},
+				success : function(result){
+					//alert('통신 성공 : ' + result);
+					if(result == 1){
+						//수정된 데이터를 화면에 보여주면 되요.
+						$(this).parent(".recommentBox").remove();
+						recomment = recomment.replace(/(?:\r\n|\r|\n)/g, '<br>');
+						comment.css('min-height','110px');
+						comment.css('height','auto');
+						$(".commentUpdate").show();
+						$(".commentDelete").show();
+						comment.html(recomment);
+					} else {
+						alert("문제가 발생했습니다. 화면을 갱신합니다.");
+						//location.href='./detail?page=${param.page}&no=${param.no}';
+						location.href='./detail?page=${param.page}&no=${detail.no}';
+					}
+				},
+				error : function(error){
+					alert('문제가 발생했습니다. : ' + error);
+				}
+			});
 		}
 		
 	});
