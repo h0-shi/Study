@@ -47,7 +47,6 @@ public class Login extends HttpServlet {
 			
 			MemberDAO dao = new MemberDAO();
 			dto = dao.login(dto);
-			
 			//아이피 저장
 			Map<String, Object> log = new HashMap<String, Object>();
 			log.put("ip",Util.getIP(request));
@@ -72,9 +71,7 @@ public class Login extends HttpServlet {
 //				페이지 이동 = login?error=4567
 				response.sendRedirect("./login?error=?");
 			}
-		} else {
-			
-		}	
+		} 
 			
 	}
 

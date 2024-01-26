@@ -36,31 +36,35 @@ $(document).ready(function(){
 		}
 	});
 	
+	// 가상폼이랑 ajax중에 뭐 할지 생각해봤는데 alert 띄우려면 ajax 해야되는구나.
 	$(".commit").click(function(){
 		var v = document.getElementById('stype');
-		var b = document.getElementById(v.value);
+		var bname = document.getElementById(v.value);
 		var temp = document.getElementById('temp');
+		var no = "no";
 //		alert(v.value+" : "+b.value+" : "+temp.value);	
-		
-		if(confirm(b.value+"로 하시겠습니까?")){
-			$.ajax({
-				url: './coffee', 
-				type: 'post',
-				dataType: 'text',
-				data: {'beverage' : b.value, "temp" : temp.value },
-				success: function(result){
-					if(result==1){
-						alert("주문이 체결되었습니다.");
-					} else {
-						alert("이미 주문을 하셨습니다.");
+		if(bname.value!="no"&&temp.value!="no"){
+			if(confirm(bname.value+"("+temp.value+")으로 하시겠습니까?")){
+				$.ajax({
+					url: './coffee', 
+					type: 'post',
+					dataType: 'text',
+					data: {'beverage' : bname.value, "temp" : temp.value },
+					success: function(result){
+						if(result==1){
+							alert("주문이 체결되었습니다.");
+						} else {
+							alert("기존 주문 취소 후 주문해주세요.");
+					}
+				},
+				error: function(request, status, error){ //통신오류
+					alert("에러 발생");
 				}
-			},
-			error: function(request, status, error){ //통신오류
-				alert("에러 발생");
-			}
-		});
+			});
+		} 
+	} else {
+		alert("주문 옵션을 확인해주세요");
 	}
-	
 	});
 	
 });
@@ -79,6 +83,7 @@ $(document).ready(function(){
 				<div class="select">
 					<div class = "temp"> Hot / Ice :
 						<select name ="temp" id="temp">
+							<option value="no" selected disabled hidden>선택해주세요.</option>
 							<option value="hot">Hot</option>
 							<option value="ice">Ice</option>
 						</select>
@@ -93,6 +98,7 @@ $(document).ready(function(){
 					
 					<div class="coffee"> 커피 : 
 						<select name="coffee" id="coffee">
+							<option value="no" selected disabled hidden>선택해주세요.</option>
 							<c:forEach items="${clist }" var="c" >
 								<option value="${c.beverage }">${c.beverage }</option>
 							</c:forEach>		
@@ -101,6 +107,7 @@ $(document).ready(function(){
 					
 					<div class="beverage"> 음료 : 
 						<select name="beverage" id="beverage">
+							<option value="no" selected disabled hidden>선택해주세요.</option>
 							<c:forEach items="${blist }" var="b" >
 								<option value="${b.beverage }">${b.beverage }</option>
 							</c:forEach>		
@@ -109,6 +116,7 @@ $(document).ready(function(){
 					
 					<div class="tea"> 차 : 
 						<select name="tea" id="tea">
+							<option value="no" selected disabled hidden>선택해주세요.</option>
 							<c:forEach items="${tlist }" var="t" >
 								<option value="${t.beverage }">${t.beverage }</option>
 							</c:forEach>		

@@ -20,7 +20,7 @@ public class MemberDAO extends AbstractDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String sql = "SELECT count(*) as count, mname FROM member WHERE mid=? AND mpw=?";
+		String sql = "SELECT count(*) as count, mname FROM member WHERE mid=? AND mpw=? AND mgrade >= 5";
 
 		try {
 			pstmt = con.prepareStatement(sql);
@@ -132,6 +132,14 @@ public class MemberDAO extends AbstractDAO {
 		}
 		
 		return dto;
+	}
+	
+	public MemberDTO list() {
+		MemberDTO dto = new MemberDTO();
+		
+		
+		return dto;
+		
 	}
 
 }

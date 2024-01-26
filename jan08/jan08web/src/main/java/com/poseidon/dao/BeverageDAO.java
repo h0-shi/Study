@@ -212,7 +212,7 @@ public class BeverageDAO extends AbstractDAO{
 		int result = 0;
 		Connection conn = db.getConnection();
 		PreparedStatement pstmt = null;
-		String sql = "DELETE FROM bselect WHERE ip = ?";
+		String sql = "DELETE FROM bselect WHERE ip = ? AND DATE = date_format(NOW(),'%Y-%m-%d')";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, ip);

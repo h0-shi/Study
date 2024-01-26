@@ -1,39 +1,31 @@
-package com.poseidon.web;
+package com.poseidon.admin;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.poseidon.dao.BeverageDAO;
-import com.poseidon.util.Util;
 
-/**
- * Servlet implementation class CoffeeDel
- */
-@WebServlet("/coffeeDel")
-public class CoffeeDel extends HttpServlet {
+@WebServlet("/admin/index") //url의 경로 = 실제 파일과 다르게 호출할 url을 지정합니다.
+public class AdminIndex extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public CoffeeDel() {
+    public AdminIndex() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String ip = Util.getIP(request);
-		BeverageDAO dao = new BeverageDAO();
-		int result = dao.del(ip);
-		if(result==1) {
-			response.sendRedirect("./coffee");
-		} else {
-			response.sendRedirect("./coffee");
-			System.out.println("ip 존재하지 않음 오류");
-		}
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		RequestDispatcher rd = request.getRequestDispatcher("/admin/admin.jsp");//파일 있는 경로
+		rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//doGet(request, response);
 	}
 
 }
