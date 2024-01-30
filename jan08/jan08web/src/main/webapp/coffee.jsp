@@ -53,18 +53,19 @@ $(document).ready(function(){
 					success: function(result){
 						if(result==1){
 							alert("주문이 체결되었습니다.");
+							location.href="./coffee";
 						} else {
 							alert("기존 주문 취소 후 주문해주세요.");
+						}
+					},
+					error: function(request, status, error){ //통신오류
+						alert("에러 발생");
 					}
-				},
-				error: function(request, status, error){ //통신오류
-					alert("에러 발생");
-				}
-			});
-		} 
-	} else {
-		alert("주문 옵션을 확인해주세요");
-	}
+				});
+			} 
+		} else {
+			alert("주문 옵션을 확인해주세요");
+		}
 	});
 	
 });

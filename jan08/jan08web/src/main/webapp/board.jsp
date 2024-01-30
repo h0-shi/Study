@@ -14,7 +14,6 @@
 <link href="./css/board.css" rel="stylesheet" />
 <script type="text/javascript" src="./js/menu.js"></script>
 <style type="text/css">
-
 </style>
 </head>
 <body>

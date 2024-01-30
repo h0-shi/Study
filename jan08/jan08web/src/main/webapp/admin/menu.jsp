@@ -14,7 +14,7 @@
 					<li onclick="url('./board')"><i class="xi-document"></i>게시글 관리</li>
 					<li onclick="url('./comments')"><i class="xi-forum-o"></i>댓글 관리</li>
 					<li onclick="url('./info')"><i class="xi-lock-o"></i>박쇼로록님</li>
-					<li ><i class=""></i></li>
+					<li ><i class=""></i>IP관리</li>
 					<li><i class=""></i></li>
 				</ul>
 			</nav>

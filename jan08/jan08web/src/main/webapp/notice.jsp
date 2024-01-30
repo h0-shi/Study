@@ -1,6 +1,5 @@
 <%@page import="com.poseidon.dto.BoardDTO"%>
 <%@page import="java.util.List"%>
-<%@page import="com.poseidon.dao.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>   
 <!DOCTYPE html>
