@@ -46,13 +46,15 @@ nav > ul > li{
 	overflow: hidden;
 	margin: 0;
 	padding: 0;
-	margin: 5px 10px;
+	margin: 10px 5px;
 	padding: 10px 0px;
 	text-align: left;
 	padding-left: 10px;
-/* 	padding-left: 5px; */
 	width: 150px;
 	overflow: hidden;
+}
+.icon{
+	padding-right: 10px;
 }
 nav > ul > li:hover {
 	background-color: #D5F0C1;
@@ -77,6 +79,14 @@ nav > ul > li >i{
   	left: 50%;
 	transform: translate(-50%, -50%);
 }
-
+.orga ul{
+	list-style-type: none;
+}
+.orga ul li{
+	display: inline-block;
+	text-align: center;
+	margin: 0px;
+	padding: 0px;
+}
 
 

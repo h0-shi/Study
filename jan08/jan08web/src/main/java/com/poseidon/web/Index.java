@@ -23,7 +23,7 @@ public class Index extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//response.sendRedirect("index.jsp");
 		LogDAO log = new LogDAO();
-		log.logWrite(Util.getIP(request), getServletName(), null);
+		log.logWrite(Util.getIP(request), "./index", null);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);

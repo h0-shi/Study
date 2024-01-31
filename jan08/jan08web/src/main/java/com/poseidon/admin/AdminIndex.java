@@ -19,7 +19,8 @@ public class AdminIndex extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/admin/admin.jsp");//파일 있는 경로
 		rd.forward(request, response);
 	}

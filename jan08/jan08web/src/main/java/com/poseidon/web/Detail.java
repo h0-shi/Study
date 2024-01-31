@@ -36,7 +36,7 @@ public class Detail extends HttpServlet {
 		BoardDAO dao = new BoardDAO();
 		
 		//log
-		dao.logWrite(Util.getIP(request), getServletName(), "board_no="+no);
+		dao.logWrite(Util.getIP(request), "./board", "board_no="+no);
 		
 		
 //		로그인 한 회원이라면 조회수 올리기
