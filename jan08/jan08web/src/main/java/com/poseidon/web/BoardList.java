@@ -35,6 +35,8 @@ public class BoardList extends HttpServlet {
 
 		//아이피 저장_map 사용
 		Map<String, Object> log = new HashMap<String, Object>();
+		System.out.println(Util.getIP(request));
+		
 		log.put("ip",Util.getIP(request));
 		log.put("url", "./board");
 		log.put("data", "page="+request.getParameter("page"));

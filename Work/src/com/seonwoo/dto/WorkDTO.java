@@ -49,6 +49,4 @@ public class WorkDTO {
 		this.wType = wType;
 	}
 
-	
-	
 }
